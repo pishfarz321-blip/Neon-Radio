@@ -45,6 +45,26 @@ button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,inpu
 @media(prefers-reduced-motion:reduce){.neon-orb{animation:none!important}.neon-cursor{filter:drop-shadow(0 0 4px #00eaff)}}
 
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
+
+/* Added controls: accent themes, Tehran clock, and connection state */
+:root[data-accent="pink"]{--teal:#ff4fa3;--teal2:#d52c7c;--cyan:#ff9bd0}
+:root[data-accent="blue"]{--teal:#438bff;--teal2:#245bd1;--cyan:#7dd3ff}
+:root[data-accent="purple"]{--teal:#b45cff;--teal2:#8034c9;--cyan:#e0a5ff}
+:root[data-accent="orange"]{--teal:#ff9b35;--teal2:#d56a17;--cyan:#ffd08a}
+.world-clock{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:14px 0 0;padding:10px 13px;border:1px solid var(--border);border-radius:13px;background:color-mix(in srgb,var(--panel) 78%,transparent);color:var(--muted);font-size:.82rem}
+.world-clock strong{font-variant-numeric:tabular-nums;letter-spacing:1px;color:var(--teal);font-size:1.05rem}
+.world-clock small{margin-inline-start:auto;font-size:.75rem}
+.connection-line{display:flex;align-items:center;gap:7px;margin:8px 0 0;font-size:.8rem;color:var(--muted)}
+.connection-dot{width:8px;height:8px;border-radius:50%;background:#2ecf87;box-shadow:0 0 9px #2ecf8766;flex:none}
+.connection-dot.offline{background:var(--danger);box-shadow:0 0 9px color-mix(in srgb,var(--danger) 55%,transparent)}
+.theme-colors{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:9px}
+.color-swatch{width:27px;height:27px;border:2px solid var(--border);border-radius:50%;padding:0;background:var(--swatch);box-shadow:0 0 0 0 transparent;transition:transform .18s,box-shadow .18s}
+.color-swatch:hover{transform:scale(1.12)}
+.color-swatch[aria-pressed="true"]{box-shadow:0 0 0 2px var(--panel),0 0 0 4px var(--swatch);border-color:var(--swatch)}
+.color-swatch[data-color="teal"]{--swatch:#00e0b5}.color-swatch[data-color="pink"]{--swatch:#ff4fa3}.color-swatch[data-color="blue"]{--swatch:#438bff}.color-swatch[data-color="purple"]{--swatch:#b45cff}.color-swatch[data-color="orange"]{--swatch:#ff9b35}
+.top-actions{flex-wrap:wrap}
+@media(max-width:520px){.world-clock{gap:7px}.world-clock small{width:100%;margin-inline-start:0}}
+
 </style>
 </head>
 <body>
@@ -56,12 +76,12 @@ button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,inpu
 <div class="app">
 <header class="topbar">
   <div class="brand"><div class="brand-mark" aria-hidden="true">☣︎</div><div><h1 data-i18n="appTitle">رادیو نئون</h1><div class="subtitle" data-i18n="tagline">موسیقی زنده، هرجا که هستی</div></div></div>
-  <div class="top-actions"><button class="icon-btn" id="langBtn" type="button" title="Change language">EN</button><button class="icon-btn" id="themeBtn" type="button" aria-label="Toggle theme" title="تغییر پوسته">☼</button></div>
+  <div class="top-actions"><button class="icon-btn" id="fullscreenBtn" type="button" aria-label="تمام‌صفحه" title="تمام‌صفحه">⛶</button><button class="icon-btn" id="langBtn" type="button" title="Change language">EN</button><button class="icon-btn" id="themeBtn" type="button" aria-label="Toggle theme" title="تغییر پوسته">☼</button></div>
 </header>
 <main>
 <section class="hero" aria-label="Radio player">
 <div class="player">
-  <div class="player-head"><div class="cover" id="playerLogo" aria-hidden="true">꧁</div><div class="now"><div class="eyebrow" data-i18n="nowPlaying">NOW PLAYING</div><div class="station-name" id="playerName">یک ایستگاه انتخاب کنید</div><div class="genre" id="playerGenre">—</div><div class="status"><span class="dot" id="statusDot"></span><span id="statusText">آماده پخش</span></div></div></div>
+  <div class="player-head"><div class="cover" id="playerLogo" aria-hidden="true">꧁</div><div class="now"><div class="eyebrow" data-i18n="nowPlaying">NOW PLAYING</div><div class="station-name" id="playerName">یک ایستگاه انتخاب کنید</div><div class="genre" id="playerGenre">—</div><div class="status"><span class="dot" id="statusDot"></span><span id="statusText">آماده پخش</span></div></div></div><div class="world-clock" aria-live="off"><span>ساعت تهران</span><strong id="tehranClock">--:--:--</strong><small id="tehranDate"></small></div>
   <div class="audio-equalizer" role="img" aria-label="Animated audio equalizer" title="Audio equalizer"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
   <div class="controls"><button class="control" id="btnPrev" type="button" aria-label="ایستگاه قبلی" title="ایستگاه قبلی">⏮</button><button class="control play" id="btnPlay" type="button" aria-label="پخش">▶</button><button class="control" id="btnNext" type="button" aria-label="ایستگاه بعدی" title="ایستگاه بعدی">⏭</button></div>
   <div class="volume-line"><span id="volIcon" aria-hidden="true">🔊</span><input type="range" id="volumeSlider" min="0" max="100" value="80" aria-label="Volume"><span class="volume-number" id="volumeNumber">80%</span></div>
@@ -69,7 +89,7 @@ button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,inpu
 <aside class="side-panel">
   <div class="panel-intro"><h2 class="panel-title" data-i18n="quickSettings">تنظیمات سریع</h2><p class="panel-help" data-i18n="quickHelp">تنظیمات شما در همین مرورگر ذخیره می‌شوند.</p></div>
   <div class="setting"><div class="setting-head"><label for="timerSelect" data-i18n="sleepTimer">تایمر خاموشی</label><span aria-hidden="true">◷</span></div><div class="timer-row"><select id="timerSelect" class="select" aria-label="Sleep timer"><option value="0">خاموش</option><option value="5">5 دقیقه</option><option value="15">15 دقیقه</option><option value="30">30 دقیقه</option><option value="45">45 دقیقه</option><option value="60">60 دقیقه</option><option value="90">90 دقیقه</option></select><button id="timerBtn" type="button">شروع</button></div><div class="timer-note" id="timerNote" aria-live="polite"></div></div>
-  <div class="setting"><div class="setting-head"><label for="qualityInfo" data-i18n="streamInfo">وضعیت پخش</label><span aria-hidden="true">◉</span></div><p class="panel-help" id="qualityInfo">برای شروع، یک ایستگاه انتخاب کنید.</p></div>
+  <div class="setting"><div class="setting-head"><label for="qualityInfo" data-i18n="streamInfo">وضعیت پخش</label><span aria-hidden="true">◉</span></div><p class="panel-help" id="qualityInfo">برای شروع، یک ایستگاه انتخاب کنید.</p><p class="connection-line"><span class="connection-dot" id="connectionDot"></span><span id="connectionText">وضعیت اینترنت: آنلاین</span></p></div><div class="setting"><div class="setting-head"><span id="themeColorsLabel">رنگ نئون</span><span aria-hidden="true">◈</span></div><div class="theme-colors" id="themeColors" role="group" aria-label="انتخاب رنگ پوسته"><button type="button" class="color-swatch" data-color="teal" aria-label="فیروزه‌ای" title="فیروزه‌ای"></button><button type="button" class="color-swatch" data-color="pink" aria-label="صورتی" title="صورتی"></button><button type="button" class="color-swatch" data-color="blue" aria-label="آبی" title="آبی"></button><button type="button" class="color-swatch" data-color="purple" aria-label="بنفش" title="بنفش"></button><button type="button" class="color-swatch" data-color="orange" aria-label="نارنجی" title="نارنجی"></button></div></div>
   <div class="setting"><div class="setting-head"><label for="customName" data-i18n="addStation">افزودن ایستگاه</label><span aria-hidden="true">＋</span></div><input id="customName" class="text-input" type="text" maxlength="70" placeholder="نام ایستگاه" autocomplete="off"><input id="customUrl" class="text-input" type="url" placeholder="https:// آدرس پخش مستقیم" style="margin-top:8px" aria-label="Stream URL"><button id="addStationBtn" class="secondary-btn" type="button" style="width:100%;margin-top:8px">افزودن</button></div>
 </aside>
 </section>
@@ -133,12 +153,13 @@ try{
  if(Array.isArray(saved.favorites))favorites=new Set(saved.favorites);
  if(saved.lang==="en")lang="en";
  if(saved.theme==="light")document.documentElement.classList.add("light");
+ if(["teal","pink","blue","purple","orange"].includes(saved.accent))document.documentElement.dataset.accent=saved.accent;
  if(Number.isFinite(saved.volume))audio.volume=Math.min(1,Math.max(0,saved.volume));
 }catch(e){}
 audio.volume=Number.isFinite(audio.volume)?audio.volume:.8;
 function t(key){const v=translations[lang][key];return typeof v==="function"?v(...Array.prototype.slice.call(arguments,1)):(v??key)}
 function persist(){
- try{localStorage.setItem(STORAGE_KEY,JSON.stringify({customStations:stations.filter(s=>customIds.has(s.id)),favorites:[...favorites],lang,theme:document.documentElement.classList.contains("light")?"light":"dark",volume:audio.volume}))}catch(e){}
+ try{localStorage.setItem(STORAGE_KEY,JSON.stringify({customStations:stations.filter(s=>customIds.has(s.id)),favorites:[...favorites],lang,theme:document.documentElement.classList.contains("light")?"light":"dark",accent:document.documentElement.dataset.accent||"teal",volume:audio.volume}))}catch(e){}
 }
 function toast(message,ok=false){const el=$("toast");el.textContent=message;el.classList.toggle("ok",ok);el.classList.add("show");clearTimeout(toast._timer);toast._timer=setTimeout(()=>el.classList.remove("show"),2800)}
 const categoryKeys=["all","rap","tataloo","pop","bandari","funk","arabic","rock","old","artists","dance","electronic"];
@@ -188,7 +209,7 @@ function updatePlayingUI(){
 }
 function selectStation(id,autoplay=false){
  const s=stations.find(x=>x.id===id);if(!s)return;
- currentId=id;$("playerName").textContent=s.name;$("playerGenre").textContent=s.genre||s.category;$("playerLogo").textContent=s.icon||"♫";$("trackTitle").textContent=t("trackUnavailable");$("livePill").textContent="RADIO";
+ currentId=id;$("playerName").textContent=s.name;$("playerGenre").textContent=s.genre||s.category;$("playerLogo").textContent=s.icon||"♫";
  audio.pause();audio.src=s.url;audio.load();renderStations();updateStatusText(autoplay?t("playing"):t("ready"));$("qualityInfo").textContent=autoplay?t("playing"):t("streamHelp");
  if(autoplay)playAudio();
 }
@@ -260,7 +281,70 @@ $("timerBtn").addEventListener("click",()=>{
  window.addEventListener("focus",()=>{cursor.style.opacity="1"});
 })();
 
-applyLanguage();updatePlayingUI();renderStations();
+applyLanguage();updatePlayingUI();renderStations();initExtraFeatures();
+
+function initExtraFeatures(){
+ // Tehran time: Iran Standard Time, including daylight-saving rules if the platform updates them.
+ const clock=()=>{
+  const now=new Date();
+  try{
+   $("tehranClock").textContent=new Intl.DateTimeFormat("fa-IR",{timeZone:"Asia/Tehran",hour:"2-digit",minute:"2-digit",second:"2-digit",hourCycle:"h23"}).format(now);
+   $("tehranDate").textContent=new Intl.DateTimeFormat(lang==="fa"?"fa-IR":"en-GB",{timeZone:"Asia/Tehran",weekday:"short",day:"numeric",month:"short"}).format(now);
+  }catch(e){}
+ };
+ clock();setInterval(clock,1000);
+ const updateConnection=()=>{
+  const online=navigator.onLine;
+  $("connectionDot").classList.toggle("offline",!online);
+  $("connectionText").textContent=lang==="fa"?(online?"وضعیت اینترنت: آنلاین":"وضعیت اینترنت: آفلاین"):(online?"Internet: Online":"Internet: Offline");
+ };
+ window.addEventListener("online",updateConnection);window.addEventListener("offline",updateConnection);updateConnection();
+ const colors=[...document.querySelectorAll(".color-swatch")];
+ const updateColorButtons=()=>colors.forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.color===(document.documentElement.dataset.accent||"teal"))));
+ colors.forEach(b=>b.addEventListener("click",()=>{document.documentElement.dataset.accent=b.dataset.color;updateColorButtons();persist()}));
+ updateColorButtons();
+ $("fullscreenBtn").addEventListener("click",async()=>{
+  try{
+   if(!document.fullscreenElement)await document.documentElement.requestFullscreen();
+   else await document.exitFullscreen();
+  }catch(e){toast(lang==="fa"?"حالت تمام‌صفحه در این مرورگر پشتیبانی نمی‌شود.":"Fullscreen is not supported here.");}
+ });
+ document.addEventListener("fullscreenchange",()=>{$("fullscreenBtn").textContent=document.fullscreenElement?"⛶":"⛶";$("fullscreenBtn").title=document.fullscreenElement?(lang==="fa"?"خروج از تمام‌صفحه":"Exit fullscreen"):(lang==="fa"?"تمام‌صفحه":"Fullscreen")});
+ // Keyboard shortcuts are ignored while the user is typing in a field.
+ document.addEventListener("keydown",e=>{
+  if(e.ctrlKey||e.altKey||e.metaKey)return;
+  const target=e.target;
+  if(target&&(target.isContentEditable||["INPUT","TEXTAREA","SELECT"].includes(target.tagName)))return;
+  if(e.code==="Space"){e.preventDefault();if(audio.paused)playAudio();else audio.pause()}
+  else if(e.key==="ArrowRight"){e.preventDefault();moveStation(lang==="fa"?-1:1)}
+  else if(e.key==="ArrowLeft"){e.preventDefault();moveStation(lang==="fa"?1:-1)}
+  else if(e.key==="m"||e.key==="M"){audio.muted=!audio.muted;$("volIcon").textContent=audio.muted?"🔇":(audio.volume<.45?"🔉":"🔊")}
+  else if(e.key==="f"||e.key==="F")$("fullscreenBtn").click();
+ });
+ // A genuine Web Audio analyser is only attached to same-origin streams; remote radio
+ // servers often block CORS, which can otherwise silence playback. Remote streams keep
+ // the playback-synchronised animated equalizer as a safe fallback.
+ const equalizer=document.querySelector(".audio-equalizer");
+ let audioContext=null, analyser=null, sourceNode=null, analyserFrame=0;
+ const bars=[...equalizer.querySelectorAll("span")];
+ function stopAnalyser(){if(analyserFrame)cancelAnimationFrame(analyserFrame);analyserFrame=0;bars.forEach(b=>b.style.removeProperty("height"))}
+ async function startAnalyser(){
+  const station=stations.find(s=>s.id===currentId);if(!station)return;
+  let streamUrl;try{streamUrl=new URL(station.url,location.href)}catch(e){return}
+  if(streamUrl.origin!==location.origin||!window.AudioContext)return;
+  try{
+   audioContext=audioContext||new AudioContext();
+   if(audioContext.state==="suspended")await audioContext.resume();
+   if(!sourceNode){sourceNode=audioContext.createMediaElementSource(audio);analyser=audioContext.createAnalyser();analyser.fftSize=128;sourceNode.connect(analyser);analyser.connect(audioContext.destination)}
+   const data=new Uint8Array(analyser.frequencyBinCount);
+   const draw=()=>{if(audio.paused){stopAnalyser();return}analyser.getByteFrequencyData(data);bars.forEach((bar,i)=>{const v=data[Math.floor(i*data.length/bars.length)]||0;bar.style.height=(12+v/255*82)+"%"});analyserFrame=requestAnimationFrame(draw)};
+   stopAnalyser();draw();
+  }catch(e){stopAnalyser()}
+ }
+ audio.addEventListener("playing",startAnalyser);
+ audio.addEventListener("pause",stopAnalyser);
+}
+
 </script>
 </body>
 </html>

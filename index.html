@@ -19,7 +19,7 @@ button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,inpu
 <body>
 <div class="app">
 <header class="topbar">
-  <div class="brand"><div class="brand-mark" aria-hidden="true">♫</div><div><h1 data-i18n="appTitle">رادیو نئون</h1><div class="subtitle" data-i18n="tagline">موسیقی زنده، هرجا که هستی</div></div></div>
+  <div class="brand"><div class="brand-mark" aria-hidden="true">☣︎</div><div><h1 data-i18n="appTitle">رادیو نئون</h1><div class="subtitle" data-i18n="tagline">موسیقی زنده، هرجا که هستی</div></div></div>
   <div class="top-actions"><button class="icon-btn" id="langBtn" type="button" title="Change language">EN</button><button class="icon-btn" id="themeBtn" type="button" aria-label="Toggle theme" title="تغییر پوسته">☼</button></div>
 </header>
 <main>
@@ -43,7 +43,7 @@ button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,inpu
   <div class="filters" id="filters"></div><div class="station-grid" id="stationGrid" aria-live="polite"></div>
 </section>
 </main>
-<footer class="footer"><span>رادیو نئون · پخش از منابع عمومی اینترنتی</span><span data-i18n="footerHint">برای پخش زنده به اینترنت نیاز دارید.</span></footer>
+<footer class="footer"><span>رادیو نئون ☣︎· پخش از منابع عمومی اینترنتی</span><span data-i18n="footerHint">برای پخش زنده به اینترنت نیاز دارید.</span></footer>
 </div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <audio id="audioEl" preload="none"></audio>
@@ -54,29 +54,20 @@ const defaultStations=[
 {id:"xg-aslerap",name:"رادیو اصل رپ",genre:"رپ فارسی",category:"rap",icon:"♫",url:"https://radio.xgaming.ir/listen/aslerap"},
 {id:"xg-rap",name:"رادیو رپ",genre:"رپ",category:"rap",icon:"♫",url:"https://radio.xgaming.ir/listen/rap"},
 {id:"xg-hiphop",name:"رادیو هیپ‌هاپ",genre:"Hip-Hop",category:"rap",icon:"♫",url:"https://radio.xgaming.ir/listen/hiphop"},
-{id:"xg-station-hiphop",name:"رادیو هیپ‌هاپ (۲)",genre:"Hip-Hop",category:"rap",icon:"♫",url:"https://radio.xgaming.ir/listen/station-hiphop"},
-{id:"xg-station-rap",name:"رادیو رپ (۲)",genre:"رپ",category:"rap",icon:"♫",url:"https://radio.xgaming.ir/listen/station-rap"},
-{id:"xg-station-aslerap",name:"رادیو اصل رپ (۲)",genre:"رپ فارسی",category:"rap",icon:"♫",url:"https://radio.xgaming.ir/listen/station-aslerap"},
 {id:"xg-station-rap-remix",name:"رادیو رپ ریمیکس",genre:"رپ ریمیکس",category:"rap",icon:"♫",url:"https://radio.xgaming.ir/listen/station-rap-remix"},
 {id:"xg-tataloo",name:"رادیو تتلو",genre:"تتلو",category:"tataloo",icon:"♫",url:"https://radio.xgaming.ir/listen/tataloo"},
 {id:"xg-station-amirtataloo",name:"رادیو امیر تتلو",genre:"امیر تتلو",category:"tataloo",icon:"♫",url:"https://radio.xgaming.ir/listen/station-amirtataloo"},
 {id:"xg-station-tmbax",name:"رادیو تی‌ام بکس",genre:"TMBax",category:"tataloo",icon:"♫",url:"https://radio.xgaming.ir/listen/station-tmbax"},
 {id:"xg-pop",name:"رادیو پاپ",genre:"پاپ",category:"pop",icon:"♫",url:"https://radio.xgaming.ir/listen/pop"},
-{id:"xg-station-pop",name:"رادیو پاپ (۲)",genre:"پاپ",category:"pop",icon:"♫",url:"https://radio.xgaming.ir/listen/station-pop"},
 {id:"xg-radiojavan",name:"رادیو جوان",genre:"Radio Javan",category:"pop",icon:"♫",url:"https://radio.xgaming.ir/listen/radiojavan"},
-{id:"xg-station-radiojavan",name:"رادیو جوان (۲)",genre:"Radio Javan",category:"pop",icon:"♫",url:"https://radio.xgaming.ir/listen/station-radiojavan"},
 {id:"xg-bandari",name:"رادیو بندری",genre:"موسیقی بندری",category:"bandari",icon:"♫",url:"https://radio.xgaming.ir/listen/bandari"},
-{id:"xg-station-bandari",name:"رادیو بندری (۲)",genre:"موسیقی بندری",category:"bandari",icon:"♫",url:"https://radio.xgaming.ir/listen/station-bandari"},
 {id:"xg-station-lori",name:"رادیو لری",genre:"موسیقی لری",category:"bandari",icon:"♫",url:"https://radio.xgaming.ir/listen/station-lori"},
 {id:"xg-funk",name:"رادیو فانک",genre:"Funk",category:"funk",icon:"♫",url:"https://radio.xgaming.ir/listen/funk"},
-{id:"xg-station-funk",name:"رادیو فانک (۲)",genre:"Funk",category:"funk",icon:"♫",url:"https://radio.xgaming.ir/listen/station-funk"},
 {id:"xg-arabic",name:"رادیو عربی",genre:"موسیقی عربی",category:"arabic",icon:"♫",url:"https://radio.xgaming.ir/listen/arabic"},
 {id:"xg-rock",name:"رادیو راک",genre:"Rock",category:"rock",icon:"♫",url:"https://radio.xgaming.ir/listen/rock"},
 {id:"xg-old",name:"رادیو آهنگ‌های قدیمی",genre:"Oldies",category:"old",icon:"♫",url:"https://radio.xgaming.ir/listen/old"},
-{id:"xg-station-old",name:"رادیو قدیمی (۲)",genre:"Oldies",category:"old",icon:"♫",url:"https://radio.xgaming.ir/listen/station-old"},
 {id:"xg-station-dariush",name:"رادیو داریوش",genre:"داریوش",category:"old",icon:"♫",url:"https://radio.xgaming.ir/listen/station-dariush"},
 {id:"xg-pouriaputak",name:"رادیو پوریا پوتک",genre:"پوریا پوتک",category:"artists",icon:"♫",url:"https://radio.xgaming.ir/listen/pouriaputak"},
-{id:"xg-station-pouria-putak",name:"رادیو پوریا پوتک (۲)",genre:"پوریا پوتک",category:"artists",icon:"♫",url:"https://radio.xgaming.ir/listen/station-pouria-putak"},
 {id:"xg-station-godpoori",name:"رادیو گادپوری",genre:"گادپوری",category:"artists",icon:"♫",url:"https://radio.xgaming.ir/listen/station-godpoori"},
 {id:"xg-station-fadaei",name:"رادیو فدایی",genre:"فدایی",category:"artists",icon:"♫",url:"https://radio.xgaming.ir/listen/station-fadaei"},
 {id:"xg-station-rezapishro",name:"رادیو رضا پیشرو",genre:"رضا پیشرو",category:"artists",icon:"♫",url:"https://radio.xgaming.ir/listen/station-rezapishro"},
@@ -86,7 +77,6 @@ const defaultStations=[
 {id:"xg-station-bigshaggy",name:"رادیو بیگ شگی",genre:"Big Shaggy",category:"artists",icon:"♫",url:"https://radio.xgaming.ir/listen/station-bigshaggy"},
 {id:"xg-station-yas",name:"رادیو یاس",genre:"یاس",category:"artists",icon:"♫",url:"https://radio.xgaming.ir/listen/station-yas"},
 {id:"xg-dep",name:"رادیو دیپ",genre:"Deep / Electronic",category:"electronic",icon:"♫",url:"https://radio.xgaming.ir/listen/dep"},
-{id:"xg-radiofazz",name:"رادیو رادیو فَز",genre:"Radio Fazz",category:"pop",icon:"♫",url:"https://radio.xgaming.ir/listen/radiofazz"},
 {id:"xg-station-hamidsefat",name:"رادیو حمید صفت",genre:"حمید صفت",category:"artists",icon:"♫",url:"https://radio.xgaming.ir/listen/station-hamidsefat"}
 ];
 const translations={

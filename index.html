@@ -140,7 +140,7 @@ function renderStations(){
 function updateStatusText(message){if(message){$("statusText").textContent=message;return}if(audio.paused){$("statusText").textContent=currentId?t("paused"):t("ready")}else $("statusText").textContent=t("connected")}
 function updatePlayingUI(){
  const playing=!audio.paused;
- $("btnPlay").textContent=playing?"⏸︎":"▶";$("btnPlay").ariaLabel=playing?(lang==="fa"?"توقف موقت":"Pause"):(lang==="fa"?"پخش":"Play");
+ $("btnPlay").textContent=playing?"Ⅱ":"▶";$("btnPlay").ariaLabel=playing?(lang==="fa"?"توقف موقت":"Pause"):(lang==="fa"?"پخش":"Play");
  $("playerLogo").classList.toggle("playing",playing);$("statusDot").classList.toggle("live",playing);
  updateStatusText();$("qualityInfo").textContent=playing?t("connected"):(currentId?t("paused"):t("streamHelp"));
 }

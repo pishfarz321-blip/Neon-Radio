@@ -42,8 +42,8 @@ button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,inpu
   <div class="search-row"><div class="search"><span class="search-icon" aria-hidden="true">⌕</span><input id="searchInput" class="text-input" type="search" placeholder="جست‌وجوی ایستگاه..." autocomplete="off"></div><button id="favoritesOnlyBtn" class="secondary-btn" type="button" aria-pressed="false">☆ <span data-i18n="favoritesOnly">علاقه‌مندی‌ها</span></button></div>
   <div class="filters" id="filters"></div><div class="station-grid" id="stationGrid" aria-live="polite"></div>
 </section>
-</main>
-<footer class="footer"><span>رادیو نئون ☣︎· پخش از منابع عمومی اینترنتی</span><span data-i18n="footerHint">برای پخش زنده به اینترنت نیاز دارید.</span></footer>
+</main> 
+<footer class="footer"><span>رادیو نئون ☣︎· پخش از منابع عمومی اینترنتی</span><span data-i18n="footerHint"> وَ دَࢪ آخَࢪ هیچڪَس شَبیهِ حَࢪفآش نَبود️:)) ️  تابع قوانین خودم .</span></footer>
 </div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <audio id="audioEl" preload="none"></audio>
@@ -55,8 +55,8 @@ const defaultStations=[
 {id:"xg-rap",name:"رادیو رپ",genre:"رپ",category:"rap",icon:"♫",url:"https://radio.xgaming.ir/listen/rap"},
 {id:"xg-hiphop",name:"رادیو هیپ‌هاپ",genre:"Hip-Hop",category:"rap",icon:"♫",url:"https://radio.xgaming.ir/listen/hiphop"},
 {id:"xg-station-rap-remix",name:"رادیو رپ ریمیکس",genre:"رپ ریمیکس",category:"rap",icon:"♫",url:"https://radio.xgaming.ir/listen/station-rap-remix"},
-{id:"xg-tataloo",name:"رادیو تتلو",genre:"تتلو",category:"tataloo",icon:"♫",url:"https://radio.xgaming.ir/listen/tataloo"},
-{id:"xg-station-amirtataloo",name:"رادیو امیر تتلو",genre:"امیر تتلو",category:"tataloo",icon:"♫",url:"https://radio.xgaming.ir/listen/station-amirtataloo"},
+{id:"xg-tataloo",name:"رادیو تتلو",genre:"تتلو",category:"tataloo",icon:"♛",url:"https://radio.xgaming.ir/listen/tataloo"},
+{id:"xg-station-amirtataloo",name:"رادیو امیر تتلو",genre:"امیر تتلو",category:"tataloo",icon:"♛",url:"https://radio.xgaming.ir/listen/station-amirtataloo"},
 {id:"xg-station-tmbax",name:"رادیو تی‌ام بکس",genre:"TMBax",category:"tataloo",icon:"♫",url:"https://radio.xgaming.ir/listen/station-tmbax"},
 {id:"xg-pop",name:"رادیو پاپ",genre:"پاپ",category:"pop",icon:"♫",url:"https://radio.xgaming.ir/listen/pop"},
 {id:"xg-radiojavan",name:"رادیو جوان",genre:"Radio Javan",category:"pop",icon:"♫",url:"https://radio.xgaming.ir/listen/radiojavan"},
@@ -66,7 +66,7 @@ const defaultStations=[
 {id:"xg-arabic",name:"رادیو عربی",genre:"موسیقی عربی",category:"arabic",icon:"♫",url:"https://radio.xgaming.ir/listen/arabic"},
 {id:"xg-rock",name:"رادیو راک",genre:"Rock",category:"rock",icon:"♫",url:"https://radio.xgaming.ir/listen/rock"},
 {id:"xg-old",name:"رادیو آهنگ‌های قدیمی",genre:"Oldies",category:"old",icon:"♫",url:"https://radio.xgaming.ir/listen/old"},
-{id:"xg-station-dariush",name:"رادیو داریوش",genre:"داریوش",category:"old",icon:"♫",url:"https://radio.xgaming.ir/listen/station-dariush"},
+{id:"xg-station-dariush",name:"رادیو داریوش",genre:"داریوش",category:"old",icon:"☠︎",url:"https://radio.xgaming.ir/listen/station-dariush"},
 {id:"xg-pouriaputak",name:"رادیو پوریا پوتک",genre:"پوریا پوتک",category:"artists",icon:"♫",url:"https://radio.xgaming.ir/listen/pouriaputak"},
 {id:"xg-station-godpoori",name:"رادیو گادپوری",genre:"گادپوری",category:"artists",icon:"♫",url:"https://radio.xgaming.ir/listen/station-godpoori"},
 {id:"xg-station-fadaei",name:"رادیو فدایی",genre:"فدایی",category:"artists",icon:"♫",url:"https://radio.xgaming.ir/listen/station-fadaei"},

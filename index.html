@@ -21,6 +21,19 @@ button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,inpu
 @keyframes neonDriftA{0%{transform:translate3d(0,0,0)}25%{transform:translate3d(38vw,18vh,0)}50%{transform:translate3d(54vw,65vh,0)}75%{transform:translate3d(18vw,52vh,0)}100%{transform:translate3d(62vw,30vh,0)}}
 @keyframes neonDriftB{0%{transform:translate3d(0,0,0)}25%{transform:translate3d(-35vw,-20vh,0)}50%{transform:translate3d(-58vw,-48vh,0)}75%{transform:translate3d(-22vw,-65vh,0)}100%{transform:translate3d(-62vw,-18vh,0)}}
 .app,.footer{position:relative;z-index:1}
+
+/* Equalizer replaces only the old track-information strip. */
+.audio-equalizer{display:flex;align-items:center;justify-content:center;gap:clamp(3px,.65vw,8px);width:100%;height:58px;margin-top:22px;padding:8px 13px;overflow:hidden;border:1px solid color-mix(in srgb,var(--teal) 32%,var(--border));border-radius:15px;background:color-mix(in srgb,var(--card) 84%,transparent);box-shadow:inset 0 0 18px color-mix(in srgb,var(--teal) 7%,transparent)}
+.audio-equalizer span{display:block;flex:1 1 0;max-width:8px;min-width:2px;height:20%;border-radius:999px;background:linear-gradient(to top,var(--teal2),var(--teal),var(--cyan));box-shadow:0 0 7px color-mix(in srgb,var(--teal) 68%,transparent),0 0 13px color-mix(in srgb,var(--cyan) 22%,transparent);animation:radioEqualizer .78s ease-in-out infinite alternate;transform-origin:center}
+.audio-equalizer span:nth-child(5n+1){animation-duration:.61s}.audio-equalizer span:nth-child(5n+2){animation-duration:.93s}.audio-equalizer span:nth-child(5n+3){animation-duration:.72s}.audio-equalizer span:nth-child(5n+4){animation-duration:1.06s}.audio-equalizer span:nth-child(3n){animation-delay:-.42s}.audio-equalizer span:nth-child(4n){animation-delay:-.2s}
+@keyframes radioEqualizer{0%{height:12%;opacity:.72}25%{height:48%}50%{height:90%;opacity:1}75%{height:34%}100%{height:65%;opacity:.9}}
+.neon-orb--blue{top:34vh;right:14vw;width:clamp(170px,22vw,320px);height:clamp(170px,22vw,320px);background:#286bff;opacity:.14;animation:neonDriftC 21s ease-in-out infinite alternate}
+.neon-orb--purple{bottom:8vh;left:18vw;width:clamp(180px,24vw,340px);height:clamp(180px,24vw,340px);background:#9b35ff;opacity:.15;animation:neonDriftD 17s ease-in-out infinite alternate}
+@keyframes neonDriftC{0%{transform:translate3d(0,0,0)}50%{transform:translate3d(-32vw,24vh,0)}100%{transform:translate3d(18vw,48vh,0)}}
+@keyframes neonDriftD{0%{transform:translate3d(0,0,0)}50%{transform:translate3d(28vw,-28vh,0)}100%{transform:translate3d(-18vw,-42vh,0)}}
+@media(max-width:520px){.audio-equalizer{height:48px;gap:3px;padding:7px}}
+@media(prefers-reduced-motion:reduce){.audio-equalizer span{animation:none!important}.audio-equalizer span:nth-child(odd){height:35%}.audio-equalizer span:nth-child(even){height:65%}.neon-orb--blue,.neon-orb--purple{animation:none!important}}
+
 .neon-cursor{display:none;position:fixed;z-index:9999;left:0;top:0;width:29px;height:39px;pointer-events:none;will-change:transform;filter:drop-shadow(0 0 5px #00eaff) drop-shadow(0 0 11px #00eaffaa)}
 .neon-cursor svg{display:block;width:100%;height:100%;overflow:visible}
 @media (hover:hover) and (pointer:fine){
@@ -36,6 +49,8 @@ button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,inpu
 <body>
 <div class="neon-orb neon-orb--cyan" aria-hidden="true"></div>
 <div class="neon-orb neon-orb--pink" aria-hidden="true"></div>
+<div class="neon-orb neon-orb--blue" aria-hidden="true"></div>
+<div class="neon-orb neon-orb--purple" aria-hidden="true"></div>
 <div class="neon-cursor" id="neonCursor" aria-hidden="true"><svg viewBox="0 0 28 40" xmlns="http://www.w3.org/2000/svg"><path d="M3 2.5 3 32 10.3 24.7 15.5 36.5 21 34 15.8 22.5 25 22.5Z" fill="#00eaff" stroke="#000" stroke-width="3.2" stroke-linejoin="round"/><path d="M3 2.5 3 32 10.3 24.7 15.5 36.5 21 34 15.8 22.5 25 22.5Z" fill="none" stroke="#72ffff" stroke-width=".8" stroke-linejoin="round"/></svg></div>
 <div class="app">
 <header class="topbar">
@@ -46,7 +61,7 @@ button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,inpu
 <section class="hero" aria-label="Radio player">
 <div class="player">
   <div class="player-head"><div class="cover" id="playerLogo" aria-hidden="true">꧁</div><div class="now"><div class="eyebrow" data-i18n="nowPlaying">NOW PLAYING</div><div class="station-name" id="playerName">یک ایستگاه انتخاب کنید</div><div class="genre" id="playerGenre">—</div><div class="status"><span class="dot" id="statusDot"></span><span id="statusText">آماده پخش</span></div></div></div>
-  <div class="track-info"><div><div class="track-label" data-i18n="trackInfo">اطلاعات آهنگ</div><div class="track-title" id="trackTitle">اطلاعات آهنگ از این ایستگاه دریافت نشده</div></div><span class="live-pill" id="livePill">RADIO</span></div>
+  <div class="audio-equalizer" role="img" aria-label="Animated audio equalizer" title="Audio equalizer"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
   <div class="controls"><button class="control" id="btnPrev" type="button" aria-label="ایستگاه قبلی" title="ایستگاه قبلی">⏮</button><button class="control play" id="btnPlay" type="button" aria-label="پخش">▶</button><button class="control" id="btnNext" type="button" aria-label="ایستگاه بعدی" title="ایستگاه بعدی">⏭</button></div>
   <div class="volume-line"><span id="volIcon" aria-hidden="true">🔊</span><input type="range" id="volumeSlider" min="0" max="100" value="80" aria-label="Volume"><span class="volume-number" id="volumeNumber">80%</span></div>
 </div>

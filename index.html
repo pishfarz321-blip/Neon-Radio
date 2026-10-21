@@ -167,6 +167,8 @@ function applyLanguage(){
  document.documentElement.lang=lang;document.documentElement.dir=lang==="fa"?"rtl":"ltr";
  document.querySelectorAll("[data-i18n]").forEach(el=>{const key=el.dataset.i18n;const map={appTitle:"title",tagline:"tagline",nowPlaying:"now",chooseStation:"choose",ready:"ready",trackInfo:"trackInfo",trackUnavailable:"trackUnavailable",quickSettings:"settings",quickHelp:"settingsHelp",sleepTimer:"timer",timerOff:"off",startTimer:"start",streamInfo:"stream",streamHelp:"streamHelp",addStation:"add",addBtn:"addBtn",stations:"stations",favoritesOnly:"favorites",footerHint:"footer"};if(map[key])el.textContent=t(map[key])});
  $("langBtn").textContent=lang==="fa"?"EN":"فا";
+ $("themeColorsLabel").textContent=lang==="fa"?"رنگ نئون":"Neon color";$("themeColors").setAttribute("aria-label",lang==="fa"?"انتخاب رنگ پوسته":"Choose accent color");
+ if($("connectionText"))$("connectionText").textContent=lang==="fa"?(navigator.onLine?"وضعیت اینترنت: آنلاین":"وضعیت اینترنت: آفلاین"):(navigator.onLine?"Internet: Online":"Internet: Offline");
  $("searchInput").placeholder=t("search");$("customName").placeholder=lang==="fa"?"نام ایستگاه":"Station name";$("customUrl").placeholder=lang==="fa"?"https:// آدرس پخش مستقیم":"https:// direct stream URL";
  $("btnPrev").title=$("btnPrev").ariaLabel=t("previous");$("btnNext").title=$("btnNext").ariaLabel=t("next");
  $("favoritesOnlyBtn").querySelector("span").textContent=t("favorites");

@@ -255,8 +255,9 @@ $("dariushWarningOk").addEventListener("click",()=>{
  if(shouldPlay)playAudio();
 });
 $("dariushWarning").addEventListener("click",e=>{
- if(e.target===$("dariushWarning"))$("dariushWarning").close();
+ if(e.target===$("dariushWarning")){ $("dariushWarning").close();playDariushAfterWarning=false; }
 });
+$("dariushWarning").addEventListener("cancel",()=>{playDariushAfterWarning=false;});
 function selectStation(id,autoplay=false){
  const s=stations.find(x=>x.id===id);if(!s)return;
  currentId=id;$("playerName").textContent=s.name;$("playerGenre").textContent=s.genre||s.category;$("playerLogo").textContent=s.icon||"♫";

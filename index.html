@@ -76,6 +76,16 @@ html.neon-cursor-enabled,html.neon-cursor-enabled body,html.neon-cursor-enabled 
 .neon-orb{filter:blur(48px)}
 @media(max-width:520px){.top-actions{align-items:center;gap:5px}.tehran-clock{min-height:39px;padding:4px 7px;gap:5px}.tehran-clock .clock-label{font-size:.56rem}.tehran-clock strong{font-size:.9rem}}
 
+
+/* Dariush station safety notice */
+.dariush-warning{width:min(420px,calc(100% - 32px));border:1px solid var(--border);border-radius:20px;padding:0;background:var(--panel);color:var(--text);box-shadow:0 24px 90px #0009}
+.dariush-warning::backdrop{background:#020706b8;backdrop-filter:blur(4px)}
+.dariush-warning-head{display:flex;align-items:center;gap:10px;padding:16px 18px;background:color-mix(in srgb,#ffbf3f 16%,var(--panel));border-bottom:1px solid var(--border)}
+.dariush-warning-icon{font-size:30px;line-height:1;color:#ffbf3f}
+.dariush-warning-title{font-weight:800;font-size:1.05rem}
+.dariush-warning-body{padding:20px 18px;line-height:1.9;font-size:.98rem}
+.dariush-warning-actions{display:flex;justify-content:flex-end;padding:0 18px 18px}
+.dariush-warning-ok{border:0;border-radius:12px;padding:10px 18px;background:var(--teal);color:#03221c;font-weight:750;cursor:pointer}
 </style>
 <meta name="description" content="Neon Radio — رادیو اینترنتی با ایستگاه‌های موسیقی، پخش زنده، اکولایزر نئون و رابط کاربری مدرن.">
 <meta name="robots" content="index, follow, max-image-preview:large">
@@ -107,7 +117,7 @@ html.neon-cursor-enabled,html.neon-cursor-enabled body,html.neon-cursor-enabled 
 <aside class="side-panel">
   <div class="panel-intro"><h2 class="panel-title" data-i18n="quickSettings">تنظیمات سریع</h2><p class="panel-help" data-i18n="quickHelp">تنظیمات شما در همین مرورگر ذخیره می‌شوند.</p></div>
   <div class="setting"><div class="setting-head"><label for="timerSelect" data-i18n="sleepTimer">تایمر خاموشی</label><span aria-hidden="true">◷</span></div><div class="timer-row"><select id="timerSelect" class="select" aria-label="Sleep timer"><option value="0">خاموش</option><option value="5">5 دقیقه</option><option value="15">15 دقیقه</option><option value="30">30 دقیقه</option><option value="45">45 دقیقه</option><option value="60">60 دقیقه</option><option value="90">90 دقیقه</option></select><button id="timerBtn" type="button">شروع</button></div><div class="timer-note" id="timerNote" aria-live="polite"></div></div>
-  <div class="setting"><div class="setting-head"><label for="qualityInfo" data-i18n="streamInfo">وضعیت پخش</label><span aria-hidden="true">◉</span></div><p class="panel-help" id="qualityInfo">برای شروع، یک ایستگاه انتخاب کنید.</p><p class="connection-line"><span class="connection-dot" id="connectionDot"></span><span id="connectionText">وضعیت اینترنت: آنلاین</span></p></div><div class="setting"><div class="setting-head"><span id="themeColorsLabel">رنگ نئون</span><span aria-hidden="true">◈</span></div><div class="theme-colors" id="themeColors" role="group" aria-label="انتخاب رنگ پوسته"><button type="button" class="color-swatch" data-color="teal" aria-label="فیروزه‌ای" title="فیروزه‌ای"></button><button type="button" class="color-swatch" data-color="pink" aria-label="صورتی" title="صورتی"></button><button type="button" class="color-swatch" data-color="blue" aria-label="آبی" title="آبی"></button><button type="button" class="color-swatch" data-color="purple" aria-label="بنفش" title="بنفش"></button><button type="button" class="color-swatch" data-color="orange" aria-label="نارنجی" title="نارنجی"></button></div></div>
+  <div class="setting"><div class="setting-head"><label for="qualityInfo" data-i18n="streamInfo">وضعیت پخش</label><span aria-hidden="true">◉</span></div><p class="panel-help" id="qualityInfo">برای شروع، یک ایستگاه انتخاب کنید.</p><p class="connection-line"><span class="connection-dot" id="connectionDot"></span><span id="connectionText">وضعیت اینترنت: آنلاین</span></p></div><div class="setting"><div class="setting-head"><span id="themeColorsLabel">رنگ تم</span><span aria-hidden="true">◈</span></div><div class="theme-colors" id="themeColors" role="group" aria-label="انتخاب رنگ پوسته"><button type="button" class="color-swatch" data-color="teal" aria-label="فیروزه‌ای" title="فیروزه‌ای"></button><button type="button" class="color-swatch" data-color="pink" aria-label="صورتی" title="صورتی"></button><button type="button" class="color-swatch" data-color="blue" aria-label="آبی" title="آبی"></button><button type="button" class="color-swatch" data-color="purple" aria-label="بنفش" title="بنفش"></button><button type="button" class="color-swatch" data-color="orange" aria-label="نارنجی" title="نارنجی"></button></div></div>
   <div class="setting"><div class="setting-head"><label for="customName" data-i18n="addStation">افزودن ایستگاه</label><span aria-hidden="true">＋</span></div><input id="customName" class="text-input" type="text" maxlength="70" placeholder="نام ایستگاه" autocomplete="off"><input id="customUrl" class="text-input" type="url" placeholder="https:// آدرس پخش مستقیم" style="margin-top:8px" aria-label="Stream URL"><button id="addStationBtn" class="secondary-btn" type="button" style="width:100%;margin-top:8px">افزودن</button></div>
 </aside>
 </section>
@@ -185,7 +195,7 @@ function applyLanguage(){
  document.documentElement.lang=lang;document.documentElement.dir=lang==="fa"?"rtl":"ltr";
  document.querySelectorAll("[data-i18n]").forEach(el=>{const key=el.dataset.i18n;const map={appTitle:"title",tagline:"tagline",nowPlaying:"now",chooseStation:"choose",ready:"ready",trackInfo:"trackInfo",trackUnavailable:"trackUnavailable",quickSettings:"settings",quickHelp:"settingsHelp",sleepTimer:"timer",timerOff:"off",startTimer:"start",streamInfo:"stream",streamHelp:"streamHelp",addStation:"add",addBtn:"addBtn",stations:"stations",favoritesOnly:"favorites",footerHint:"footer"};if(map[key])el.textContent=t(map[key])});
  $("langBtn").textContent=lang==="fa"?"EN":"فا";
- $("themeColorsLabel").textContent=lang==="fa"?"رنگ نئون":"Neon color";$("themeColors").setAttribute("aria-label",lang==="fa"?"انتخاب رنگ پوسته":"Choose accent color");
+ $("themeColorsLabel").textContent=lang==="fa"?"رنگ تم":"Theme color";$("themeColors").setAttribute("aria-label",lang==="fa"?"انتخاب رنگ پوسته":"Choose accent color");
  if($("connectionText"))$("connectionText").textContent=lang==="fa"?(navigator.onLine?"وضعیت اینترنت: آنلاین":"وضعیت اینترنت: آفلاین"):(navigator.onLine?"Internet: Online":"Internet: Offline");
  $("searchInput").placeholder=t("search");$("customName").placeholder=lang==="fa"?"نام ایستگاه":"Station name";$("customUrl").placeholder=lang==="fa"?"https:// آدرس پخش مستقیم":"https:// direct stream URL";
  $("btnPrev").title=$("btnPrev").ariaLabel=t("previous");$("btnNext").title=$("btnNext").ariaLabel=t("next");
@@ -227,10 +237,31 @@ function updatePlayingUI(){
  $("playerLogo").classList.toggle("playing",playing);$("statusDot").classList.toggle("live",playing);
  updateStatusText();$("qualityInfo").textContent=playing?t("connected"):(currentId?t("paused"):t("streamHelp"));
 }
+let playDariushAfterWarning=false;
+function showDariushWarning(shouldPlay=false){
+ const dialog=$("dariushWarning");
+ if(!dialog)return;
+ playDariushAfterWarning=shouldPlay;
+ $("dariushWarningTitle").textContent=lang==="fa"?"هشدار":"Warning";
+ $("dariushWarningMessage").textContent=lang==="fa"?"هشدار: قبل از پخش در تنهایی از هر گونه سلاح گرم و سرد فاصله بگیرید.":"Warning: Before listening alone, keep away from all firearms and bladed weapons.";
+ $("dariushWarningOk").textContent=lang==="fa"?"متوجه شدم":"I understand";
+ if(!dialog.open)dialog.showModal();
+}
+$("dariushWarningOk").addEventListener("click",()=>{
+ const dialog=$("dariushWarning");
+ if(dialog.open)dialog.close();
+ const shouldPlay=playDariushAfterWarning;
+ playDariushAfterWarning=false;
+ if(shouldPlay)playAudio();
+});
+$("dariushWarning").addEventListener("click",e=>{
+ if(e.target===$("dariushWarning"))$("dariushWarning").close();
+});
 function selectStation(id,autoplay=false){
  const s=stations.find(x=>x.id===id);if(!s)return;
  currentId=id;$("playerName").textContent=s.name;$("playerGenre").textContent=s.genre||s.category;$("playerLogo").textContent=s.icon||"♫";
  audio.pause();audio.src=s.url;audio.load();renderStations();updateStatusText(autoplay?t("playing"):t("ready"));$("qualityInfo").textContent=autoplay?t("playing"):t("streamHelp");
+ if(id==="xg-station-dariush"){showDariushWarning(autoplay);return}
  if(autoplay)playAudio();
 }
 async function playAudio(){
@@ -347,5 +378,11 @@ function initExtraFeatures(){
 }
 
 </script>
+
+<dialog class="dariush-warning" id="dariushWarning" aria-labelledby="dariushWarningTitle" aria-describedby="dariushWarningMessage">
+  <div class="dariush-warning-head"><span class="dariush-warning-icon" aria-hidden="true">⚠</span><span class="dariush-warning-title" id="dariushWarningTitle">هشدار</span></div>
+  <div class="dariush-warning-body" id="dariushWarningMessage">قبل از پخش در تنهایی از هر گونه سلاح گرم و سرد فاصله بگیرید.</div>
+  <div class="dariush-warning-actions"><button type="button" class="dariush-warning-ok" id="dariushWarningOk">متوجه شدم</button></div>
+</dialog>
 </body>
 </html>

@@ -77,15 +77,14 @@ html.neon-cursor-enabled,html.neon-cursor-enabled body,html.neon-cursor-enabled 
 @media(max-width:520px){.top-actions{align-items:center;gap:5px}.tehran-clock{min-height:39px;padding:4px 7px;gap:5px}.tehran-clock .clock-label{font-size:.56rem}.tehran-clock strong{font-size:.9rem}}
 
 
-/* Dariush station safety notice */
-.dariush-warning{width:min(420px,calc(100% - 32px));border:1px solid var(--border);border-radius:20px;padding:0;background:var(--panel);color:var(--text);box-shadow:0 24px 90px #0009}
-.dariush-warning::backdrop{background:#020706b8;backdrop-filter:blur(4px)}
-.dariush-warning-head{display:flex;align-items:center;gap:10px;padding:16px 18px;background:color-mix(in srgb,#ffbf3f 16%,var(--panel));border-bottom:1px solid var(--border)}
-.dariush-warning-icon{font-size:30px;line-height:1;color:#ffbf3f}
-.dariush-warning-title{font-weight:800;font-size:1.05rem}
-.dariush-warning-body{padding:20px 18px;line-height:1.9;font-size:.98rem}
-.dariush-warning-actions{display:flex;justify-content:flex-end;padding:0 18px 18px}
-.dariush-warning-ok{border:0;border-radius:12px;padding:10px 18px;background:var(--teal);color:#03221c;font-weight:750;cursor:pointer}
+/* Small warning dialog for the Dariush station only */
+.dariush-warning{width:min(390px,calc(100% - 32px));padding:0;border:1px solid var(--border);border-radius:16px;background:var(--panel);color:var(--text);box-shadow:0 18px 60px #0008}
+.dariush-warning::backdrop{background:#0009}
+.dariush-warning-content{padding:18px;line-height:1.9}
+.dariush-warning-heading{display:flex;align-items:center;gap:10px;margin-bottom:10px;font-weight:800}
+.dariush-warning-icon{font-size:28px;color:#ffbf3f}
+.dariush-warning-actions{text-align:left;margin-top:14px}
+.dariush-warning-actions button{border:0;border-radius:10px;padding:9px 16px;background:var(--teal);color:#03221c;font-weight:700}
 </style>
 <meta name="description" content="Neon Radio — رادیو اینترنتی با ایستگاه‌های موسیقی، پخش زنده، اکولایزر نئون و رابط کاربری مدرن.">
 <meta name="robots" content="index, follow, max-image-preview:large">
@@ -237,32 +236,26 @@ function updatePlayingUI(){
  $("playerLogo").classList.toggle("playing",playing);$("statusDot").classList.toggle("live",playing);
  updateStatusText();$("qualityInfo").textContent=playing?t("connected"):(currentId?t("paused"):t("streamHelp"));
 }
-let playDariushAfterWarning=false;
-function showDariushWarning(shouldPlay=false){
+let dariushWarningShouldPlay=false;
+function openDariushWarning(shouldPlay){
  const dialog=$("dariushWarning");
- if(!dialog)return;
- playDariushAfterWarning=shouldPlay;
+ dariushWarningShouldPlay=shouldPlay;
  $("dariushWarningTitle").textContent=lang==="fa"?"هشدار":"Warning";
  $("dariushWarningMessage").textContent=lang==="fa"?"هشدار: قبل از پخش در تنهایی از هر گونه سلاح گرم و سرد فاصله بگیرید.":"Warning: Before listening alone, keep away from all firearms and bladed weapons.";
  $("dariushWarningOk").textContent=lang==="fa"?"متوجه شدم":"I understand";
  if(!dialog.open)dialog.showModal();
 }
 $("dariushWarningOk").addEventListener("click",()=>{
- const dialog=$("dariushWarning");
- if(dialog.open)dialog.close();
- const shouldPlay=playDariushAfterWarning;
- playDariushAfterWarning=false;
+ $("dariushWarning").close();
+ const shouldPlay=dariushWarningShouldPlay;
+ dariushWarningShouldPlay=false;
  if(shouldPlay)playAudio();
 });
-$("dariushWarning").addEventListener("click",e=>{
- if(e.target===$("dariushWarning")){ $("dariushWarning").close();playDariushAfterWarning=false; }
-});
-$("dariushWarning").addEventListener("cancel",()=>{playDariushAfterWarning=false;});
 function selectStation(id,autoplay=false){
  const s=stations.find(x=>x.id===id);if(!s)return;
  currentId=id;$("playerName").textContent=s.name;$("playerGenre").textContent=s.genre||s.category;$("playerLogo").textContent=s.icon||"♫";
  audio.pause();audio.src=s.url;audio.load();renderStations();updateStatusText(autoplay?t("playing"):t("ready"));$("qualityInfo").textContent=autoplay?t("playing"):t("streamHelp");
- if(id==="xg-station-dariush"){showDariushWarning(autoplay);return}
+ if(id==="xg-station-dariush"){openDariushWarning(autoplay);return}
  if(autoplay)playAudio();
 }
 async function playAudio(){
@@ -380,10 +373,6 @@ function initExtraFeatures(){
 
 </script>
 
-<dialog class="dariush-warning" id="dariushWarning" aria-labelledby="dariushWarningTitle" aria-describedby="dariushWarningMessage">
-  <div class="dariush-warning-head"><span class="dariush-warning-icon" aria-hidden="true">⚠</span><span class="dariush-warning-title" id="dariushWarningTitle">هشدار</span></div>
-  <div class="dariush-warning-body" id="dariushWarningMessage">قبل از پخش در تنهایی از هر گونه سلاح گرم و سرد فاصله بگیرید.</div>
-  <div class="dariush-warning-actions"><button type="button" class="dariush-warning-ok" id="dariushWarningOk">متوجه شدم</button></div>
-</dialog>
+<dialog class="dariush-warning" id="dariushWarning" aria-labelledby="dariushWarningTitle"><div class="dariush-warning-content"><div class="dariush-warning-heading"><span class="dariush-warning-icon" aria-hidden="true">⚠</span><span id="dariushWarningTitle">هشدار</span></div><div id="dariushWarningMessage">هشدار: قبل از پخش در تنهایی از هر گونه سلاح گرم و سرد فاصله بگیرید.</div><div class="dariush-warning-actions"><button type="button" id="dariushWarningOk">متوجه شدم</button></div></div></dialog>
 </body>
 </html>

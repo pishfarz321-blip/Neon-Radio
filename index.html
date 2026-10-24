@@ -374,5 +374,18 @@ function initExtraFeatures(){
 </script>
 
 <dialog class="dariush-warning" id="dariushWarning" aria-labelledby="dariushWarningTitle"><div class="dariush-warning-content"><div class="dariush-warning-heading"><span class="dariush-warning-icon" aria-hidden="true">⚠</span><span id="dariushWarningTitle">هشدار</span></div><div id="dariushWarningMessage">هشدار: قبل از پخش در تنهایی از هر گونه سلاح گرم و سرد فاصله بگیرید.</div><div class="dariush-warning-actions"><button type="button" id="dariushWarningOk">متوجه شدم</button></div></div></dialog>
+
+<script>
+/* Independent clock updater: keeps Tehran time working even if another feature script fails. */
+(function(){
+ const el=document.getElementById("tehranClock");
+ if(!el)return;
+ let formatter;
+ try{formatter=new Intl.DateTimeFormat("en-GB",{timeZone:"Asia/Tehran",hour:"2-digit",minute:"2-digit",hourCycle:"h23",numberingSystem:"latn"});}
+ catch(e){el.textContent="--:--";return;}
+ const tick=()=>{try{el.textContent=formatter.format(new Date());}catch(e){}};
+ tick();window.setInterval(tick,1000);
+})();
+</script>
 </body>
 </html>

@@ -399,5 +399,78 @@ function initExtraFeatures(){
  tick();window.setInterval(tick,1000);
 })();
 </script>
+
+<script>
+/* Recovery for browsers where the main radio initializer fails. */
+(function(){
+ const run=()=>{
+  const grid=document.getElementById("stationGrid");
+  const count=document.getElementById("stationCount");
+  if(!grid || grid.children.length) return;
+  const fallbackStations=[
+{id:"xg-aslerap",name:"رادیو اصل رپ",genre:"رپ فارسی",category:"rap",icon:"♫",url:"https://radio.xgaming.ir/listen/aslerap"},
+{id:"xg-rap",name:"رادیو رپ",genre:"رپ",category:"rap",icon:"♫",url:"https://radio.xgaming.ir/listen/rap"},
+{id:"xg-hiphop",name:"رادیو هیپ‌هاپ",genre:"Hip-Hop",category:"rap",icon:"♫",url:"https://radio.xgaming.ir/listen/hiphop"},
+{id:"xg-station-rap-remix",name:"رادیو رپ ریمیکس",genre:"رپ ریمیکس",category:"rap",icon:"♫",url:"https://radio.xgaming.ir/listen/station-rap-remix"},
+{id:"xg-tataloo",name:"رادیو تتلو",genre:"تتلو",category:"tataloo",icon:"♫",url:"https://radio.xgaming.ir/listen/tataloo"},
+{id:"xg-station-amirtataloo",name:"رادیو امیر تتلو",genre:"امیر تتلو",category:"tataloo",icon:"♫",url:"https://radio.xgaming.ir/listen/station-amirtataloo"},
+{id:"xg-station-tmbax",name:"رادیو تی‌ام بکس",genre:"TMBax",category:"tataloo",icon:"♫",url:"https://radio.xgaming.ir/listen/station-tmbax"},
+{id:"xg-pop",name:"رادیو پاپ",genre:"پاپ",category:"pop",icon:"♫",url:"https://radio.xgaming.ir/listen/pop"},
+{id:"xg-radiojavan",name:"رادیو جوان",genre:"Radio Javan",category:"pop",icon:"♫",url:"https://radio.xgaming.ir/listen/radiojavan"},
+{id:"xg-bandari",name:"رادیو بندری",genre:"موسیقی بندری",category:"bandari",icon:"♫",url:"https://radio.xgaming.ir/listen/bandari"},
+{id:"xg-station-lori",name:"رادیو لری",genre:"موسیقی لری",category:"bandari",icon:"♫",url:"https://radio.xgaming.ir/listen/station-lori"},
+{id:"xg-funk",name:"رادیو فانک",genre:"Funk",category:"funk",icon:"♫",url:"https://radio.xgaming.ir/listen/funk"},
+{id:"xg-arabic",name:"رادیو عربی",genre:"موسیقی عربی",category:"arabic",icon:"♫",url:"https://radio.xgaming.ir/listen/arabic"},
+{id:"xg-rock",name:"رادیو راک",genre:"Rock",category:"rock",icon:"♫",url:"https://radio.xgaming.ir/listen/rock"},
+{id:"xg-old",name:"رادیو آهنگ‌های قدیمی",genre:"Oldies",category:"old",icon:"♫",url:"https://radio.xgaming.ir/listen/old"},
+{id:"xg-station-dariush",name:"رادیو داریوش",genre:"داریوش",category:"old",icon:"♫",url:"https://radio.xgaming.ir/listen/station-dariush"},
+{id:"xg-pouriaputak",name:"رادیو پوریا پوتک",genre:"پوریا پوتک",category:"artists",icon:"♫",url:"https://radio.xgaming.ir/listen/pouriaputak"},
+{id:"xg-station-godpoori",name:"رادیو گادپوری",genre:"گادپوری",category:"artists",icon:"♫",url:"https://radio.xgaming.ir/listen/station-godpoori"},
+{id:"xg-station-fadaei",name:"رادیو فدایی",genre:"فدایی",category:"artists",icon:"♫",url:"https://radio.xgaming.ir/listen/station-fadaei"},
+{id:"xg-station-rezapishro",name:"رادیو رضا پیشرو",genre:"رضا پیشرو",category:"artists",icon:"♫",url:"https://radio.xgaming.ir/listen/station-rezapishro"},
+{id:"xg-station-sepehrkhalse",name:"رادیو سپهر خلسه",genre:"سپهر خلسه",category:"artists",icon:"♫",url:"https://radio.xgaming.ir/listen/station-sepehrkhalse"},
+{id:"xg-station-hayedeh",name:"رادیو هایده",genre:"هایده",category:"artists",icon:"♫",url:"https://radio.xgaming.ir/listen/station-hayedeh"},
+{id:"xg-station-shooti",name:"رادیو شوتی",genre:"شوتی",category:"artists",icon:"♫",url:"https://radio.xgaming.ir/listen/station-shooti"},
+{id:"xg-station-bigshaggy",name:"رادیو بیگ شگی",genre:"Big Shaggy",category:"artists",icon:"♫",url:"https://radio.xgaming.ir/listen/station-bigshaggy"},
+{id:"xg-station-yas",name:"رادیو یاس",genre:"یاس",category:"artists",icon:"♫",url:"https://radio.xgaming.ir/listen/station-yas"},
+{id:"xg-dep",name:"رادیو دیپ",genre:"Deep / Electronic",category:"electronic",icon:"♫",url:"https://radio.xgaming.ir/listen/dep"},
+{id:"xg-station-hamidsefat",name:"رادیو حمید صفت",genre:"حمید صفت",category:"artists",icon:"♫",url:"https://radio.xgaming.ir/listen/station-hamidsefat"},
+{id:"xg-station-pouria-putak",name:"رادیو پوریا پوتک",genre:"پوریا پوتک",category:"artists",icon:"♫",url:"https://radio.xgaming.ir/listen/station-pouria-putak"},
+{id:"xg-station-pop",name:"رادیو پاپ (نسخه دوم)",genre:"پاپ",category:"pop",icon:"♫",url:"https://radio.xgaming.ir/listen/station-pop"},
+{id:"xg-station-hiphop",name:"رادیو هیپ‌هاپ (نسخه دوم)",genre:"Hip-Hop",category:"rap",icon:"♫",url:"https://radio.xgaming.ir/listen/station-hiphop"},
+{id:"xg-radiofazz",name:"رادیو فاز",genre:"موسیقی فارسی",category:"pop",icon:"♫",url:"https://radio.xgaming.ir/listen/radiofazz"},
+{id:"xg-station-old",name:"رادیو آهنگ‌های قدیمی (نسخه دوم)",genre:"Oldies",category:"old",icon:"♫",url:"https://radio.xgaming.ir/listen/station-old"},
+{id:"xg-station-rap",name:"رادیو رپ (نسخه دوم)",genre:"رپ",category:"rap",icon:"♫",url:"https://radio.xgaming.ir/listen/station-rap"},
+{id:"xg-station-radiojavan",name:"رادیو جوان (نسخه دوم)",genre:"Radio Javan",category:"pop",icon:"♫",url:"https://radio.xgaming.ir/listen/station-radiojavan"},
+{id:"xg-station-aslerap",name:"رادیو اصل رپ (نسخه دوم)",genre:"رپ فارسی",category:"rap",icon:"♫",url:"https://radio.xgaming.ir/listen/station-aslerap"},
+{id:"xg-station-funk",name:"رادیو فانک (نسخه دوم)",genre:"Funk",category:"funk",icon:"♫",url:"https://radio.xgaming.ir/listen/station-funk"},
+{id:"xg-station-bandari",name:"رادیو بندری (نسخه دوم)",genre:"موسیقی بندری",category:"bandari",icon:"♫",url:"https://radio.xgaming.ir/listen/station-bandari"}
+];
+  grid.replaceChildren();
+  fallbackStations.forEach((station,i)=>{
+   const card=document.createElement("article");card.className="station-card";
+   const icon=document.createElement("div");icon.className="station-icon";icon.textContent=station.icon||"♫";
+   const details=document.createElement("div");details.className="station-details";details.tabIndex=0;details.setAttribute("role","button");
+   const name=document.createElement("div");name.className="station-card-name";name.textContent=station.name;
+   const genre=document.createElement("div");genre.className="station-card-genre";genre.textContent=station.genre||station.category;
+   details.append(name,genre);
+   const play=()=>{
+    if(typeof window.selectStation==="function"){window.selectStation(station.id,true);return}
+    const audio=document.getElementById("audioEl");
+    const title=document.getElementById("playerName");
+    const playerGenre=document.getElementById("playerGenre");
+    if(title)title.textContent=station.name;if(playerGenre)playerGenre.textContent=station.genre||station.category;
+    if(audio){audio.src=station.url;audio.play().catch(()=>{const q=document.getElementById("qualityInfo");if(q)q.textContent="پخش نشد؛ اتصال یا آدرس را بررسی کنید."})}
+   };
+   details.addEventListener("click",play);details.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();play()}});
+   card.append(icon,details);grid.appendChild(card);
+  });
+  if(count)count.textContent=fallbackStations.length+" ایستگاه";
+ };
+ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",run,{once:true});else run();
+ window.addEventListener("load",run,{once:true});
+})();
+</script>
+
 </body>
 </html>

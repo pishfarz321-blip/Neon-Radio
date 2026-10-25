@@ -318,7 +318,9 @@ $("timerBtn").addEventListener("click",()=>{
 
 /* Native cursor enabled to avoid input lag from the custom animated pointer. */
 
-applyLanguage();updatePlayingUI();renderStations();initExtraFeatures();
+renderFilters();renderStations();
+try{applyLanguage()}catch(e){console.error("Language initialization failed:",e)}
+updatePlayingUI();initExtraFeatures();
 
 function initExtraFeatures(){
  // Tehran time: Iran Standard Time, including daylight-saving rules if the platform updates them.

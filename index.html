@@ -32,10 +32,32 @@ button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,inpu
 @keyframes haloDrift{0%{transform:translate3d(-55px,-42px,0) scale(.9);opacity:.72}50%{transform:translate3d(58px,38px,0) scale(1.16);opacity:1}100%{transform:translate3d(-25px,58px,0) scale(.98);opacity:.82}}
 .app,.footer{position:relative;z-index:1}
 @media(prefers-reduced-motion:reduce){.neon-edge-light{animation:none;opacity:.5}}
+
+/* Additional ambient motion, glass finish, and touch-light feedback */
+.neon-edge-light{will-change:transform,opacity}
+.neon-edge-light::after{content:"";position:absolute;left:50%;top:50%;width:260px;height:5px;transform:translate(-50%,-50%) rotate(-28deg);border-radius:50%;background:linear-gradient(90deg,transparent,#d9b2ffcc,#ffffff,#b34dffcc,transparent);box-shadow:0 0 10px #c77aff,0 0 24px #a020f0;filter:blur(1px);opacity:.9}
+.neon-edge-light.bottom::after,.neon-edge-light.right::after{background:linear-gradient(90deg,transparent,#e7d2ff,#a020f0,#ffffff,transparent)}
+.neon-particles{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+.neon-particle{position:absolute;width:4px;height:4px;border-radius:50%;background:#d7a2ff;box-shadow:0 0 7px #c77aff,0 0 16px #a020f0;opacity:0;animation:particleFloat var(--duration,8s) ease-in-out var(--delay,0s) infinite}
+@keyframes particleFloat{0%{transform:translate3d(0,22px,0) scale(.55);opacity:0}20%{opacity:.9}75%{opacity:.75}100%{transform:translate3d(var(--drift,28px),-90px,0) scale(1.15);opacity:0}}
+.neon-laser-trails{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+.neon-laser{position:absolute;width:170px;height:2px;border-radius:50%;background:linear-gradient(90deg,transparent,#c58aff,#fff,#a020f0,transparent);box-shadow:0 0 8px #b84dff,0 0 18px #8a2be2;opacity:0;transform:rotate(-28deg);animation:laserSweep 6s linear infinite}
+.neon-laser:nth-child(1){top:24%;left:-190px;animation-delay:-1s}
+.neon-laser:nth-child(2){top:67%;left:-190px;animation-delay:-3.2s}
+.neon-laser:nth-child(3){top:42%;right:-190px;transform:rotate(152deg);animation-delay:-4.5s}
+.neon-laser:nth-child(4){top:84%;right:-190px;transform:rotate(152deg);animation-delay:-2s}
+@keyframes laserSweep{0%{translate:0 0;opacity:0}12%{opacity:.9}78%{opacity:.7}100%{translate:calc(100vw + 380px) 0;opacity:0}}
+.player,.side-panel,.library{backdrop-filter:blur(14px) saturate(125%);-webkit-backdrop-filter:blur(14px) saturate(125%);background:color-mix(in srgb,var(--panel) 82%,transparent)}
+.setting,.station-card{backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);background:color-mix(in srgb,var(--card) 84%,transparent)}
+.touch-light-ripple{position:absolute;pointer-events:none;width:14px;height:14px;border-radius:50%;transform:translate(-50%,-50%) scale(0);background:radial-gradient(circle,#fff 0%,#e8caff 15%,#b84dff 38%,#a020f055 65%,transparent 75%);box-shadow:0 0 12px #d9a2ff,0 0 26px #a020f0;animation:touchLightBurst .65s ease-out forwards;z-index:5}
+@keyframes touchLightBurst{to{transform:translate(-50%,-50%) scale(9);opacity:0}}
+@media(prefers-reduced-motion:reduce){.neon-particle,.neon-laser,.neon-edge-light::after{animation:none;display:none}.touch-light-ripple{animation:none;display:none}}
 </style>
 </head>
 <body>
 <div class="neon-edge-lights" aria-hidden="true"><span class="neon-edge-light top"></span><span class="neon-edge-light bottom"></span><span class="neon-edge-light left"></span><span class="neon-edge-light right"></span></div>
+<div class="neon-particles" aria-hidden="true"><span class="neon-particle" style="left:9%;top:8%;--duration:6s;--delay:-0s;--drift:-18px"></span><span class="neon-particle" style="left:46%;top:31%;--duration:7s;--delay:-1s;--drift:30px"></span><span class="neon-particle" style="left:83%;top:54%;--duration:8s;--delay:-2s;--drift:-42px"></span><span class="neon-particle" style="left:23%;top:77%;--duration:9s;--delay:-3s;--drift:54px"></span><span class="neon-particle" style="left:60%;top:6%;--duration:10s;--delay:-4s;--drift:-18px"></span><span class="neon-particle" style="left:0%;top:29%;--duration:6s;--delay:-5s;--drift:30px"></span><span class="neon-particle" style="left:37%;top:52%;--duration:7s;--delay:-6s;--drift:-42px"></span><span class="neon-particle" style="left:74%;top:75%;--duration:8s;--delay:-0s;--drift:54px"></span><span class="neon-particle" style="left:14%;top:4%;--duration:9s;--delay:-1s;--drift:-18px"></span><span class="neon-particle" style="left:51%;top:27%;--duration:10s;--delay:-2s;--drift:30px"></span><span class="neon-particle" style="left:88%;top:50%;--duration:6s;--delay:-3s;--drift:-42px"></span><span class="neon-particle" style="left:28%;top:73%;--duration:7s;--delay:-4s;--drift:54px"></span><span class="neon-particle" style="left:65%;top:2%;--duration:8s;--delay:-5s;--drift:-18px"></span><span class="neon-particle" style="left:5%;top:25%;--duration:9s;--delay:-6s;--drift:30px"></span></div>
+<div class="neon-laser-trails" aria-hidden="true"><span class="neon-laser"></span><span class="neon-laser"></span><span class="neon-laser"></span><span class="neon-laser"></span></div>
 <div class="app">
 <header class="topbar">
   <div class="brand"><div class="brand-mark" aria-hidden="true">☣︎</div><div><h1 data-i18n="appTitle">رادیو نئون</h1><div class="subtitle" data-i18n="tagline">موسیقی زنده، هرجا که هستی</div></div></div>
@@ -225,6 +247,21 @@ $("timerBtn").addEventListener("click",()=>{
 });
 applyLanguage();updatePlayingUI();renderStations();
 (function(){const clock=$("tehranClock");const tick=()=>{try{clock.textContent=new Intl.DateTimeFormat("en-GB",{timeZone:"Asia/Tehran",hour:"2-digit",minute:"2-digit",hourCycle:"h23",numberingSystem:"latn"}).format(new Date())}catch(e){clock.textContent="--:--"}};tick();setInterval(tick,1000);$("fullscreenBtn").addEventListener("click",async()=>{try{if(!document.fullscreenElement)await document.documentElement.requestFullscreen();else await document.exitFullscreen()}catch(e){toast("حالت تمام‌صفحه در این مرورگر پشتیبانی نمی‌شود.")}});const colors=[...document.querySelectorAll(".color-swatch")];colors.forEach(b=>b.addEventListener("click",()=>{document.documentElement.dataset.accent=b.dataset.color;colors.forEach(x=>x.setAttribute("aria-pressed",String(x===b)));persist()}));})();
+
+/* Subtle light burst at each user tap/click */
+document.addEventListener("pointerdown",function(e){
+ const target=e.target.closest("button,.control,.station-card,.chip,.color-swatch,.icon-btn,.secondary-btn,.primary-btn");
+ if(!target)return;
+ const rect=target.getBoundingClientRect();
+ const ripple=document.createElement("span");
+ ripple.className="touch-light-ripple";
+ ripple.style.left=(e.clientX-rect.left)+"px";
+ ripple.style.top=(e.clientY-rect.top)+"px";
+ if(getComputedStyle(target).position==="static")target.style.position="relative";
+ target.style.overflow="hidden";
+ target.appendChild(ripple);
+ ripple.addEventListener("animationend",()=>ripple.remove(),{once:true});
+});
 </script>
 </body>
 </html>

@@ -23,18 +23,15 @@ button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,inpu
 @media(prefers-reduced-motion:reduce){.color-swatch{animation:none}}
 .dariush-dialog{width:min(420px,calc(100vw - 32px));border:1px solid var(--danger);border-radius:20px;background:var(--panel);color:var(--text);padding:22px;box-shadow:0 0 35px #ff667744}.dariush-dialog::backdrop{background:#0009;backdrop-filter:blur(4px)}.dariush-warning-icon{font-size:2rem;color:var(--danger);text-align:center;margin-bottom:10px}.dariush-warning-text{text-align:center;line-height:1.9}.dariush-dialog button{display:block;margin:18px auto 0;border:0;border-radius:10px;padding:10px 22px;background:var(--teal);color:#03251d;font-weight:750}@media(max-width:520px){.tehran-clock{font-size:.82rem;padding:6px 8px}.topbar{flex-wrap:wrap}.top-actions{align-items:center;flex-wrap:wrap}}
 
-/* Four purple neon light streaks moving continuously across the site */
+/* Four soft, moving circular neon halos behind the site */
 .neon-edge-lights{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
-.neon-edge-light{position:absolute;display:block;border-radius:999px;opacity:.98;filter:blur(2px);background:#b84dff;box-shadow:0 0 6px #b84dff,0 0 14px #a020f0,0 0 28px #8a2be2,0 0 46px #8a2be288}
-.neon-edge-light.top,.neon-edge-light.bottom{width:145px;height:4px;left:-160px;animation:neonHorizontal 7s linear infinite}
-.neon-edge-light.bottom{animation-delay:-3.5s}
-.neon-edge-light.left,.neon-edge-light.right{width:4px;height:145px;top:-160px;animation:neonVertical 8s linear infinite}
-.neon-edge-light.right{animation-delay:-4s}
-.neon-edge-light.top{top:0}.neon-edge-light.bottom{bottom:0;top:auto}.neon-edge-light.left{left:0}.neon-edge-light.right{right:0;left:auto}
-@keyframes neonHorizontal{from{transform:translateX(0)}to{transform:translateX(calc(100vw + 320px))}}
-@keyframes neonVertical{from{transform:translateY(0)}to{transform:translateY(calc(100vh + 320px))}}
+.neon-edge-light{position:absolute;display:block;width:190px;height:190px;border-radius:50%;opacity:.68;filter:blur(20px);mix-blend-mode:screen;animation:haloDrift 13s ease-in-out infinite alternate}
+.neon-edge-light.top,.neon-edge-light.left{background:radial-gradient(circle,transparent 16%,#00f5d455 31%,#00f5d422 47%,transparent 70%);box-shadow:0 0 32px #00f5d422}
+.neon-edge-light.bottom,.neon-edge-light.right{background:radial-gradient(circle,transparent 16%,#a020f055 31%,#a020f033 48%,transparent 72%);box-shadow:0 0 38px #a020f033}
+.neon-edge-light.top{top:10%;left:8%;animation-delay:-2s}.neon-edge-light.bottom{top:55%;left:65%;animation-delay:-5s}.neon-edge-light.left{top:38%;left:12%;animation-delay:-8s}.neon-edge-light.right{top:72%;left:78%;animation-delay:-3s}
+@keyframes haloDrift{0%{transform:translate3d(-18px,-22px,0) scale(.85);opacity:.38}50%{transform:translate3d(28px,12px,0) scale(1.18);opacity:.75}100%{transform:translate3d(-8px,32px,0) scale(.96);opacity:.48}}
 .app,.footer{position:relative;z-index:1}
-@media(prefers-reduced-motion:reduce){.neon-edge-light{animation:none;display:none}}
+@media(prefers-reduced-motion:reduce){.neon-edge-light{animation:none;opacity:.3}}
 </style>
 </head>
 <body>

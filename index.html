@@ -68,9 +68,32 @@ html.effects-off .player,html.effects-off .side-panel,html.effects-off .library,
 html.lightweight .neon-edge-lights,html.lightweight .neon-particles,html.lightweight .neon-laser-trails,html.lightweight .neon-fog,html.lightweight .neon-flow-light,html.lightweight .touch-light-ripple{display:none!important}
 html.lightweight .color-swatch,html.lightweight .player:before,html.lightweight .cover.playing,html.lightweight.neon-entry .app,html.lightweight.neon-entry .footer{animation:none!important}
 @media(max-width:520px){.effects-panel{gap:7px}.effect-toggle{padding:9px 10px}}@media(prefers-reduced-motion:reduce){.neon-fog,.neon-flow-light,html.neon-entry .app,html.neon-entry .footer,html.bass-active .cover.playing,html.bass-active .play{animation:none!important}}
+
+/* Minimal sound-awakening entry effect */
+.neon-intro{position:fixed;inset:0;z-index:99999;display:grid;place-items:center;background:#050608;opacity:1;transition:opacity .35s ease}
+.neon-intro.done{opacity:0;pointer-events:none}
+.neon-intro-inner{width:min(78vw,360px);text-align:center;color:#e9faff;font-family:Arial,sans-serif}
+.neon-intro-wave{height:46px;display:flex;align-items:center;justify-content:center;gap:4px;margin:0 auto 22px}
+.neon-intro-wave i{display:block;width:3px;height:8px;border-radius:5px;background:#9b5cff;box-shadow:0 0 9px #9b5cff,0 0 18px #24dfff;animation:introWave .62s ease-in-out infinite alternate}
+.neon-intro-wave i:nth-child(3n){animation-delay:-.25s;background:#35e7ff}
+.neon-intro-wave i:nth-child(2n){animation-delay:-.4s}
+.neon-intro-title{font-size:clamp(22px,5vw,30px);font-weight:800;letter-spacing:4px;text-shadow:0 0 14px #8655ff;animation:introReveal 1.1s ease both}
+.neon-intro-line{height:2px;width:0;margin:14px auto 0;background:linear-gradient(90deg,#9c4dff,#39eaff);box-shadow:0 0 12px #7e58ff;animation:introLine .8s .25s ease forwards}
+@keyframes introWave{to{height:38px;opacity:.65}}
+@keyframes introReveal{from{opacity:0;letter-spacing:9px}to{opacity:1;letter-spacing:4px}}
+@keyframes introLine{to{width:100%}}
+@media(prefers-reduced-motion:reduce){.neon-intro-wave i,.neon-intro-title,.neon-intro-line{animation:none!important}.neon-intro-line{width:100%}}
+
 </style>
 </head>
 <body>
+<div class="neon-intro" id="neonIntro" aria-label="Neon Radio loading">
+  <div class="neon-intro-inner">
+    <div class="neon-intro-wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="neon-intro-title">NEON RADIO</div>
+    <div class="neon-intro-line"></div>
+  </div>
+</div>
 <div class="neon-edge-lights" aria-hidden="true"><span class="neon-edge-light top"></span><span class="neon-edge-light bottom"></span><span class="neon-edge-light left"></span><span class="neon-edge-light right"></span></div>
 <div class="neon-particles" aria-hidden="true"><span class="neon-particle" style="left:9%;top:8%;--duration:6s;--delay:-0s;--drift:-18px"></span><span class="neon-particle" style="left:46%;top:31%;--duration:7s;--delay:-1s;--drift:30px"></span><span class="neon-particle" style="left:83%;top:54%;--duration:8s;--delay:-2s;--drift:-42px"></span><span class="neon-particle" style="left:23%;top:77%;--duration:9s;--delay:-3s;--drift:54px"></span><span class="neon-particle" style="left:60%;top:6%;--duration:10s;--delay:-4s;--drift:-18px"></span><span class="neon-particle" style="left:0%;top:29%;--duration:6s;--delay:-5s;--drift:30px"></span><span class="neon-particle" style="left:37%;top:52%;--duration:7s;--delay:-6s;--drift:-42px"></span><span class="neon-particle" style="left:74%;top:75%;--duration:8s;--delay:-0s;--drift:54px"></span><span class="neon-particle" style="left:14%;top:4%;--duration:9s;--delay:-1s;--drift:-18px"></span><span class="neon-particle" style="left:51%;top:27%;--duration:10s;--delay:-2s;--drift:30px"></span><span class="neon-particle" style="left:88%;top:50%;--duration:6s;--delay:-3s;--drift:-42px"></span><span class="neon-particle" style="left:28%;top:73%;--duration:7s;--delay:-4s;--drift:54px"></span><span class="neon-particle" style="left:65%;top:2%;--duration:8s;--delay:-5s;--drift:-18px"></span><span class="neon-particle" style="left:5%;top:25%;--duration:9s;--delay:-6s;--drift:30px"></span></div>
 <div class="neon-laser-trails" aria-hidden="true"><span class="neon-laser"></span><span class="neon-laser"></span><span class="neon-laser"></span><span class="neon-laser"></span></div><div class="neon-fog" aria-hidden="true"></div><div class="neon-flow-light" aria-hidden="true"></div><div class="neon-flow-light flow-two" aria-hidden="true"></div>
@@ -279,6 +302,17 @@ document.addEventListener("pointerdown",function(e){
  target.appendChild(ripple);
  ripple.addEventListener("animationend",()=>ripple.remove(),{once:true});
 });
+</script>
+<script>
+(function(){
+  var intro=document.getElementById("neonIntro");
+  if(!intro)return;
+  var reduced=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  window.setTimeout(function(){
+    intro.classList.add("done");
+    window.setTimeout(function(){if(intro.parentNode)intro.parentNode.removeChild(intro);},400);
+  },reduced?250:1750);
+})();
 </script>
 </body>
 </html>

@@ -216,7 +216,9 @@ async function syncGhasemPlaylist(shouldPlay){
   else{updateStatusText(t("ready"));updatePlayingUI()}
   if(!ghasemSyncTimer)ghasemSyncTimer=setInterval(()=>{if(currentId==="ghasem-fazeli-radio")syncGhasemPlaylist(!audio.paused)},30000);
  }catch(err){
-  $("qualityInfo").textContent=t("error");toast("تعذر بارگذاری پلی‌لیست قاسم فاضلی");
+  const reason=err&&err.message?err.message:String(err);
+  $("qualityInfo").textContent="خطای فنی: "+reason;
+  toast("خطای رادیو: "+reason);
  }finally{ghasemSyncBusy=false}
 }
 const translations={

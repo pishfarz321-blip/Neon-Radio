@@ -175,13 +175,12 @@ async function getGhasemDurations(){
  const durations=await Promise.all(station.playlist.map(track=>new Promise((resolve,reject)=>{
   const probe=new Audio();let settled=false;
   const finish=(fn,value)=>{if(settled)return;settled=true;clearTimeout(timer);probe.removeAttribute("src");probe.load();fn(value)};
-  const timer=setTimeout(()=>finish(reject,new Error("Track metadata timeout")),18000);
+  const timer=setTimeout(()=>finish(resolve,240),18000);
   probe.preload="metadata";
-  probe.addEventListener("loadedmetadata",()=>finish(resolve,Number.isFinite(probe.duration)&&probe.duration>0?probe.duration:NaN),{once:true});
-  probe.addEventListener("error",()=>finish(reject,new Error("Track metadata unavailable")),{once:true});
+  probe.addEventListener("loadedmetadata",()=>finish(resolve,Number.isFinite(probe.duration)&&probe.duration>0?probe.duration:240),{once:true});
+  probe.addEventListener("error",()=>finish(resolve,240),{once:true});
   probe.src=track.url;probe.load();
  })));
- if(durations.some(d=>!Number.isFinite(d)||d<=0))throw new Error("Invalid playlist duration");
  ghasemDurations=durations;return durations;
 }
 async function syncGhasemPlaylist(shouldPlay){

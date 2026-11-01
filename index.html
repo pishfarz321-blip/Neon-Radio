@@ -319,7 +319,7 @@ audio.addEventListener("error",()=>{updatePlayingUI();$("qualityInfo").textConte
 $("volumeSlider").value=Math.round(audio.volume*100);$("volumeNumber").textContent=$("volumeSlider").value+"%";
 $("volumeSlider").addEventListener("input",e=>{audio.volume=Number(e.target.value)/100;$("volumeNumber").textContent=e.target.value+"%";$("volIcon").textContent=Number(e.target.value)===0?"🔇":Number(e.target.value)<45?"🔉":"🔊";persist()});
 $("searchInput").addEventListener("input",renderStations);
-$("dnsSettingsBtn").addEventListener("click",()=>{window.location.href="intent://settings#Intent;action=android.settings.PRIVATE_DNS_SETTINGS;end"});
+$("dnsSettingsBtn").addEventListener("click",()=>{toast("در حال بازکردن تنظیمات DNS خصوصی اندروید…");window.location.href="intent:#Intent;action=android.settings.PRIVATE_DNS_SETTINGS;category=android.intent.category.DEFAULT;end"});
 $("favoritesOnlyBtn").addEventListener("click",()=>{favoritesOnly=!favoritesOnly;$("favoritesOnlyBtn").setAttribute("aria-pressed",String(favoritesOnly));$("favoritesOnlyBtn").classList.toggle("active",favoritesOnly);renderStations()});
 $("themeBtn").addEventListener("click",()=>{document.documentElement.classList.toggle("light");persist()});
 $("langBtn").addEventListener("click",()=>{lang=lang==="fa"?"en":"fa";applyLanguage();persist()});

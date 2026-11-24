@@ -285,13 +285,40 @@ function updatePlayingUI(){
  const playing=!audio.paused;
  $("btnPlay").textContent=playing?"Ⅱ":"▶";$("btnPlay").ariaLabel=playing?(lang==="fa"?"توقف موقت":"Pause"):(lang==="fa"?"پخش":"Play");
  $("playerLogo").classList.toggle("playing",playing);$("statusDot").classList.toggle("live",playing);
+ if("mediaSession" in navigator){try{navigator.mediaSession.playbackState=playing?"playing":"paused"}catch(e){}}
  updateStatusText();$("qualityInfo").textContent=playing?t("connected"):(currentId?t("paused"):t("streamHelp"));
 }
+function updateMediaSession(){
+ if(!("mediaSession" in navigator))return;
+ const station=stations.find(x=>x.id===currentId);
+ if(!station)return;
+ try{
+  if("MediaMetadata" in window){
+   navigator.mediaSession.metadata=new MediaMetadata({
+    title:station.name,
+    artist:"Neon Radio",
+    album:station.genre||"Live Radio",
+    artwork:[{src:"data:image/svg+xml,"+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#00e0b5"/><stop offset="1" stop-color="#51f5e2"/></linearGradient></defs><rect width="512" height="512" rx="112" fill="#071110"/><circle cx="256" cy="256" r="174" fill="none" stroke="url(#g)" stroke-width="24"/><path d="M218 142v190a58 58 0 1 1-28-50V190l150-34v142a58 58 0 1 1-28-50V112z" fill="url(#g)"/></svg>'),sizes:"512x512",type:"image/svg+xml"}]
+   });
+  }
+ }catch(e){}
+}
+function setupMediaSession(){
+ if(!("mediaSession" in navigator))return;
+ const actions={
+  play:()=>playAudio(),
+  pause:()=>audio.pause(),
+  previoustrack:()=>moveStation(-1),
+  nexttrack:()=>moveStation(1)
+ };
+ Object.entries(actions).forEach(([name,handler])=>{try{navigator.mediaSession.setActionHandler(name,handler)}catch(e){}});
+}
+setupMediaSession();
 let dariushShouldPlay=false;function showDariushWarning(shouldPlay){dariushShouldPlay=shouldPlay;$("dariushWarningMessage").textContent=lang==="fa"?"هشدار: قبل از پخش در تنهایی از هر گونه سلاح گرم و سرد فاصله بگیرید.":"Warning: Before listening alone, keep away from all firearms and bladed weapons.";if(!$("dariushWarning").open)$("dariushWarning").showModal()}$("dariushWarningOk").addEventListener("click",()=>{$("dariushWarning").close();const go=dariushShouldPlay;dariushShouldPlay=false;if(go)playAudio()});
 function selectStation(id,autoplay=false){
  const s=stations.find(x=>x.id===id);if(!s)return;
  currentId=id;$("playerName").textContent=s.name;$("playerGenre").textContent=s.genre||s.category;$("playerLogo").textContent=s.icon||"♫";$("trackTitle").textContent=t("trackUnavailable");$("livePill").textContent="RADIO";
- audio.pause();audio.src=s.url;audio.load();renderStations();updateStatusText(autoplay?t("playing"):t("ready"));$("qualityInfo").textContent=autoplay?t("playing"):t("streamHelp");
+ updateMediaSession();audio.pause();audio.src=s.url;audio.load();renderStations();updateStatusText(autoplay?t("playing"):t("ready"));$("qualityInfo").textContent=autoplay?t("playing"):t("streamHelp");
  if(id==="ghasem-fazeli-radio"){syncGhasemPlaylist(autoplay);return}
  if(id==="xg-station-dariush"){showDariushWarning(autoplay);return}
   if(autoplay)playAudio();

@@ -84,6 +84,24 @@ html.lightweight .color-swatch,html.lightweight .player:before,html.lightweight 
 @keyframes introLine{to{width:100%}}
 @media(prefers-reduced-motion:reduce){.neon-intro-wave i,.neon-intro-title,.neon-intro-line{animation:none!important}.neon-intro-line{width:100%}}
 
+
+/* Small FPS optimization: keep the neon look while reducing paint-heavy animation work */
+.neon-edge-light,.neon-particle,.neon-laser,.neon-flow-light,.neon-fog{backface-visibility:hidden;transform:translateZ(0)}
+.neon-edge-light{filter:blur(11px);will-change:transform,opacity}
+.neon-edge-light::after{box-shadow:0 0 7px #c77aff,0 0 14px #a020f0}
+.neon-particle{box-shadow:0 0 5px #c77aff,0 0 9px #a020f0;will-change:transform,opacity}
+.neon-laser{box-shadow:0 0 5px #b84dff,0 0 10px #8a2be2;will-change:translate,opacity}
+.neon-fog{filter:blur(26px);will-change:transform}
+.neon-flow-light{box-shadow:0 0 6px var(--teal),0 0 14px var(--cyan);will-change:translate,opacity}
+@keyframes neonLightFlow{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+@keyframes bassPulse{from{transform:scale(1)}to{transform:scale(1.025)}}
+@media(max-width:700px){
+ .player,.side-panel,.library{-webkit-backdrop-filter:blur(8px) saturate(115%);backdrop-filter:blur(8px) saturate(115%)}
+ .setting,.station-card{-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+ .neon-edge-light{filter:blur(9px)}
+ .neon-fog{filter:blur(22px)}
+}
+
 </style>
 </head>
 <body>

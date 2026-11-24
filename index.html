@@ -26,17 +26,19 @@ button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,inpu
 /* Four bright, filled moving neon halo lights behind the site */
 .neon-edge-lights{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
 .neon-edge-light{position:absolute;display:block;width:190px;height:190px;border-radius:50%;opacity:.9;filter:blur(16px);mix-blend-mode:screen;animation:haloDrift 7.5s ease-in-out infinite alternate}
-.neon-edge-light.top,.neon-edge-light.left{background:radial-gradient(circle,#00f5d5 0%,#00f5d5dd 18%,#00f5d588 38%,#00f5d533 60%,transparent 78%);box-shadow:0 0 26px #00f5d588,0 0 55px #00f5d555}
-.neon-edge-light.bottom,.neon-edge-light.right{background:radial-gradient(circle,#b52bff 0%,#b52bffdd 18%,#a020f088 38%,#a020f044 60%,transparent 78%);box-shadow:0 0 28px #b52bff99,0 0 60px #a020f066}
+.neon-edge-light.top,.neon-edge-light.left,.neon-edge-light.right{background:radial-gradient(circle,#00f5a8 0%,#00f5a8dd 18%,#00f5a888 38%,#00f5a833 60%,transparent 78%);box-shadow:0 0 26px #00f5a888,0 0 55px #00f5a555}
+.neon-edge-light.bottom{width:250px;height:250px;background:radial-gradient(circle,#b52bff 0%,#b52bffdd 18%,#a020f088 38%,#a020f044 60%,transparent 78%);box-shadow:0 0 30px #b52bff99,0 0 66px #a020f077}
 .neon-edge-light.top{top:10%;left:8%;animation-delay:-2s}.neon-edge-light.bottom{top:55%;left:65%;animation-delay:-5s}.neon-edge-light.left{top:38%;left:12%;animation-delay:-8s}.neon-edge-light.right{top:72%;left:78%;animation-delay:-3s}
-@keyframes haloDrift{0%{transform:translate3d(-55px,-42px,0) scale(.9);opacity:.72}50%{transform:translate3d(58px,38px,0) scale(1.16);opacity:1}100%{transform:translate3d(-25px,58px,0) scale(.98);opacity:.82}}
+.neon-edge-light{animation:haloDrift 18s ease-in-out infinite alternate}
+@keyframes haloDrift{0%{transform:translate3d(-95px,-70px,0)}25%{transform:translate3d(65px,-35px,0)}50%{transform:translate3d(105px,75px,0)}75%{transform:translate3d(-55px,95px,0)}100%{transform:translate3d(-115px,-45px,0)}}
 .app,.footer{position:relative;z-index:1}
 @media(prefers-reduced-motion:reduce){.neon-edge-light{animation:none;opacity:.5}}
 
 /* Additional ambient motion, glass finish, and touch-light feedback */
 .neon-edge-light{will-change:transform,opacity}
 .neon-edge-light::after{content:"";position:absolute;left:50%;top:50%;width:260px;height:5px;transform:translate(-50%,-50%) rotate(-28deg);border-radius:50%;background:linear-gradient(90deg,transparent,#d9b2ffcc,#ffffff,#b34dffcc,transparent);box-shadow:0 0 10px #c77aff,0 0 24px #a020f0;filter:blur(1px);opacity:.9}
-.neon-edge-light.bottom::after,.neon-edge-light.right::after{background:linear-gradient(90deg,transparent,#e7d2ff,#a020f0,#ffffff,transparent)}
+.neon-edge-light.top::after,.neon-edge-light.left::after,.neon-edge-light.right::after{background:linear-gradient(90deg,transparent,#b8ffe8,#00f5a8,#ffffff,transparent)}
+.neon-edge-light.bottom::after{width:320px;height:6px;background:linear-gradient(90deg,transparent,#e7d2ff,#a020f0,#ffffff,transparent)}
 .neon-particles{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:0}
 .neon-particle{position:absolute;width:4px;height:4px;border-radius:50%;background:#d7a2ff;box-shadow:0 0 7px #c77aff,0 0 16px #a020f0;opacity:0;animation:particleFloat var(--duration,8s) ease-in-out var(--delay,0s) infinite}
 @keyframes particleFloat{0%{transform:translate3d(0,22px,0) scale(.55);opacity:0}20%{opacity:.9}75%{opacity:.75}100%{transform:translate3d(var(--drift,28px),-90px,0) scale(1.15);opacity:0}}

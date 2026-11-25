@@ -25,12 +25,12 @@ button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,inpu
 
 /* Five bright, filled neon halo lights with roaming motion */
 .neon-edge-lights{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
-.neon-edge-light{position:absolute;top:0;left:0;display:block;width:190px;height:190px;border-radius:50%;opacity:1;filter:blur(12px);mix-blend-mode:screen;will-change:transform;animation:haloDrift 8s ease-in-out infinite}
+.neon-edge-light{position:absolute;top:0;left:0;display:block;width:190px;height:190px;border-radius:50%;opacity:1;filter:blur(12px);mix-blend-mode:screen;will-change:left,top;animation:haloDrift 8s linear infinite}
 .neon-edge-light.top,.neon-edge-light.left,.neon-edge-light.right{background:radial-gradient(circle,#00ffd0 0%,#00f5a8ff 22%,#00f5a8cc 42%,#00f5a866 64%,transparent 80%);box-shadow:0 0 38px #00f5a8cc,0 0 78px #00f5a899,0 0 115px #00f5a855}
 .neon-edge-light.bottom,.neon-edge-light.purple-two{width:250px;height:250px;background:radial-gradient(circle,#e0a0ff 0%,#b52bffff 22%,#a020f0cc 42%,#a020f077 64%,transparent 80%);box-shadow:0 0 42px #b52bffdd,0 0 88px #a020f0aa,0 0 125px #a020f066}
 .neon-edge-light.purple-two{width:220px;height:220px;opacity:.86}
 .neon-edge-light.top{animation-duration:3.2s}.neon-edge-light.left{animation-duration:3.6s}.neon-edge-light.right{animation-duration:4s}.neon-edge-light.bottom{animation-duration:4.4s}.neon-edge-light.purple-two{animation-duration:3.8s}
-@keyframes haloDrift{0%{transform:translate3d(-5vw,-5vh,0)}25%{transform:translate3d(48vw,-5vh,0)}50%{transform:translate3d(48vw,42vh,0)}75%{transform:translate3d(-5vw,42vh,0)}100%{transform:translate3d(-5vw,-5vh,0)}}
+@keyframes haloDrift{0%{left:0;top:0}25%{left:calc(100% - 250px);top:0}50%{left:calc(100% - 250px);top:calc(100% - 250px)}75%{left:0;top:calc(100% - 250px)}100%{left:0;top:0}}
 .app,.footer{position:relative;z-index:1}
 @media(prefers-reduced-motion:reduce){.neon-edge-light{animation:none;opacity:.5}}
 
@@ -435,12 +435,7 @@ applyLanguage();updatePlayingUI();renderStations();
 (function(){
  const lights=document.querySelectorAll(".neon-edge-light");
  lights.forEach(light=>{
-  const size=light.classList.contains("bottom")?250:(light.classList.contains("purple-two")?220:190);
-  const maxX=Math.max(0,window.innerWidth-size);
-  const maxY=Math.max(0,window.innerHeight-size);
-  light.style.left=Math.round(Math.random()*maxX)+"px";
-  light.style.top=Math.round(Math.random()*maxY)+"px";
-  light.style.animationDelay=(-Math.random()*12)+"s";
+  light.style.animationDelay=(-Math.random()*14)+"s";
  });
 })();
 

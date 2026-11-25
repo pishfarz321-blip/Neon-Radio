@@ -274,7 +274,6 @@ function applyLanguage(){
  $("timerBtn").textContent=timerId?t("cancel"):t("start");
  const setText=(selector,fa,en)=>{const el=document.querySelector(selector);if(el)el.textContent=lang==="en"?en:fa};
  const setAttr=(selector,attr,fa,en)=>{const el=document.querySelector(selector);if(el)el.setAttribute(attr,lang==="en"?en:fa)};
- setText("#fullscreenBtn","تمام‌صفحه","Fullscreen");
  setAttr("#fullscreenBtn","aria-label","تمام‌صفحه","Fullscreen");
  setAttr("#themeBtn","title","تغییر پوسته","Toggle theme");
  setText("#playerName",t("choose"),"Choose a station");

@@ -294,6 +294,7 @@ function applyLanguage(){
  const effectLabels=["Enable all effects","Neon halos","Floating particles","Laser trails","Neon fog","Light flow","Touch-reactive light","Glass effect","Entry effect","Bass pulse while playing","Dynamic light theme","Low-end device mode","Energy-saving mode"];
  const faEffectLabels=["فعال‌بودن همه افکت‌ها","هاله‌های نئونی","ذرات شناور","رد لیزری","مه نئونی","جریان نور","واکنش نور به لمس","افکت شیشه‌ای","افکت ورود","تپش هاله هنگام پخش","تم نور پویا","حالت سبک برای گوشی ضعیف","حالت ذخیره‌سازی انرژی"];
  document.querySelectorAll(".effects-panel .effect-toggle span").forEach((el,i)=>{if(i<effectLabels.length)el.textContent=lang==="en"?effectLabels[i]:faEffectLabels[i]});
+ setText(".setting-head label[for=\"effectsEnabled\"]","پنل افکت‌های نئونی","Neon Effects Panel");
  setText(".effect-actions .panel-help","سرعت تغییر تم","Theme transition speed");
  const speedLabels={15:["آرام","Slow"],8:["معمولی","Normal"],4:["سریع","Fast"]};
  document.querySelectorAll("#dynamicThemeSpeed option").forEach(el=>{const pair=speedLabels[Number(el.value)];if(pair)el.textContent=pair[lang==="en"?1:0]});

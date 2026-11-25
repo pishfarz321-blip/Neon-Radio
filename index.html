@@ -438,7 +438,7 @@ applyLanguage();updatePlayingUI();renderStations();
   const size=light.classList.contains("bottom")?250:(light.classList.contains("purple-two")?220:190);
   const maxX=()=>Math.max(0,window.innerWidth-size);
   const maxY=()=>Math.max(0,window.innerHeight-size);
-  return {light,size,x:Math.random()*maxX(),y:Math.random()*maxY(),vx:(Math.random()<.5?-1:1)*(1.8+Math.random()*1.2),vy:(Math.random()<.5?-1:1)*(1.8+Math.random()*1.2)};
+  return {light,size,x:Math.random()*maxX(),y:Math.random()*maxY(),vx:(Math.random()<.5?-1:1)*(1.5+Math.random()*1.0),vy:(Math.random()<.5?-1:1)*(1.5+Math.random()*1.0)};
  });
  let previous=0;
  function moveLights(time){

@@ -25,9 +25,9 @@ button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,inpu
 
 /* Five bright, filled neon halo lights with roaming motion */
 .neon-edge-lights{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
-.neon-edge-light{position:absolute;top:0;left:0;display:block;width:190px;height:190px;border-radius:50%;opacity:.9;filter:blur(16px);mix-blend-mode:screen;will-change:transform;animation:haloDrift 12s ease-in-out infinite}
-.neon-edge-light.top,.neon-edge-light.left,.neon-edge-light.right{background:radial-gradient(circle,#00f5a8 0%,#00f5a8dd 18%,#00f5a888 38%,#00f5a833 60%,transparent 78%);box-shadow:0 0 26px #00f5a888,0 0 55px #00f5a555}
-.neon-edge-light.bottom,.neon-edge-light.purple-two{width:250px;height:250px;background:radial-gradient(circle,#b52bff 0%,#b52bffdd 18%,#a020f088 38%,#a020f044 60%,transparent 78%);box-shadow:0 0 30px #b52bff99,0 0 66px #a020f077}
+.neon-edge-light{position:absolute;top:0;left:0;display:block;width:190px;height:190px;border-radius:50%;opacity:1;filter:blur(12px);mix-blend-mode:screen;will-change:transform;animation:haloDrift 12s ease-in-out infinite}
+.neon-edge-light.top,.neon-edge-light.left,.neon-edge-light.right{background:radial-gradient(circle,#00ffd0 0%,#00f5a8ff 22%,#00f5a8cc 42%,#00f5a866 64%,transparent 80%);box-shadow:0 0 38px #00f5a8cc,0 0 78px #00f5a899,0 0 115px #00f5a855}
+.neon-edge-light.bottom,.neon-edge-light.purple-two{width:250px;height:250px;background:radial-gradient(circle,#e0a0ff 0%,#b52bffff 22%,#a020f0cc 42%,#a020f077 64%,transparent 80%);box-shadow:0 0 42px #b52bffdd,0 0 88px #a020f0aa,0 0 125px #a020f066}
 .neon-edge-light.purple-two{width:220px;height:220px;opacity:.86}
 .neon-edge-light.left{animation-duration:13s}.neon-edge-light.right{animation-duration:11s}.neon-edge-light.bottom{animation-duration:14s}.neon-edge-light.purple-two{animation-duration:12.5s}
 @keyframes haloDrift{0%{transform:translate3d(-4vw,-3vh,0)}25%{transform:translate3d(20vw,-13vh,0)}50%{transform:translate3d(24vw,18vh,0)}75%{transform:translate3d(-13vw,22vh,0)}100%{transform:translate3d(-4vw,-3vh,0)}}

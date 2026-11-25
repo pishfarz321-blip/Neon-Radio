@@ -331,9 +331,16 @@ function updatePlayingUI(){
  const playing=!audio.paused;
  $("btnPlay").textContent=playing?"Ⅱ":"▶";$("btnPlay").ariaLabel=playing?(lang==="fa"?"توقف موقت":"Pause"):(lang==="fa"?"پخش":"Play");
  $("playerLogo").classList.toggle("playing",playing);$("statusDot").classList.toggle("live",playing);
- if("mediaSession" in navigator){try{navigator.mediaSession.playbackState=playing?"playing":"paused"}catch(e){}}
- updateStatusText();$("qualityInfo").textContent=playing?t("connected"):(currentId?t("paused"):t("streamHelp"));
+ if("mediaSession" in navigator){try{navigator.mediaSession.playbackState=(playing||mediaSwitching)?"playing":"paused"}catch(e){}}
+ updateStatusText();$("qualityInfo").textContent=playing?t("connected"):(mediaSwitching?t("playing"):(currentId?t("paused"):t("streamHelp")));
 }
+let mediaSwitching=false,mediaSwitchTimer=null;
+function beginConnectionWait(){
+ mediaSwitching=true;clearTimeout(mediaSwitchTimer);
+ if("mediaSession" in navigator){try{navigator.mediaSession.playbackState="playing"}catch(e){}}
+ mediaSwitchTimer=setTimeout(()=>{mediaSwitching=false;mediaSwitchTimer=null;if(audio.paused){updatePlayingUI();$("qualityInfo").textContent=t("error");toast(t("error"))}},45000);
+}
+function endConnectionWait(){mediaSwitching=false;clearTimeout(mediaSwitchTimer);mediaSwitchTimer=null}
 function updateMediaSession(){
  if(!("mediaSession" in navigator))return;
  const station=stations.find(x=>x.id===currentId);
@@ -363,6 +370,7 @@ setupMediaSession();
 let dariushShouldPlay=false;function showDariushWarning(shouldPlay){dariushShouldPlay=shouldPlay;$("dariushWarningMessage").textContent=lang==="fa"?"هشدار: قبل از پخش در تنهایی از هر گونه سلاح گرم و سرد فاصله بگیرید.":"Warning: Before listening alone, keep away from all firearms and bladed weapons.";if(!$("dariushWarning").open)$("dariushWarning").showModal()}$("dariushWarningOk").addEventListener("click",()=>{$("dariushWarning").close();const go=dariushShouldPlay;dariushShouldPlay=false;if(go)playAudio()});
 function selectStation(id,autoplay=false){
  const s=stations.find(x=>x.id===id);if(!s)return;
+ endConnectionWait();if(autoplay)beginConnectionWait();
  currentId=id;$("playerName").textContent=s.name;$("playerGenre").textContent=s.genre||s.category;$("playerLogo").textContent=s.icon||"♫";$("trackTitle").textContent=t("trackUnavailable");$("livePill").textContent="RADIO";
  updateMediaSession();audio.pause();audio.src=s.url;audio.load();renderStations();updateStatusText(autoplay?t("playing"):t("ready"));$("qualityInfo").textContent=autoplay?t("playing"):t("streamHelp");
  if(id==="ghasem-fazeli-radio"){syncGhasemPlaylist(autoplay);return}
@@ -371,19 +379,20 @@ function selectStation(id,autoplay=false){
 }
 async function playAudio(){
  if(currentId==="ghasem-fazeli-radio"){syncGhasemPlaylist(true);return}
+ if(audio.paused&&!mediaSwitching)beginConnectionWait();
  if(!currentId){const first=stations[0];if(!first){toast(t("selectFirst"));return}selectStation(first.id,false)}
  if(!audio.src){const s=stations.find(x=>x.id===currentId);if(s)audio.src=s.url}
  try{updateStatusText(t("playing"));await audio.play();updatePlayingUI()}
- catch(err){updatePlayingUI();$("qualityInfo").textContent=t("error");toast(t("error"))}
+ catch(err){if(!mediaSwitching)beginConnectionWait()}
 }
 $("btnPlay").addEventListener("click",()=>{if(audio.paused)playAudio();else audio.pause()});
 $("btnPrev").addEventListener("click",()=>moveStation(-1));$("btnNext").addEventListener("click",()=>moveStation(1));
 function moveStation(step){if(!stations.length)return;let i=stations.findIndex(s=>s.id===currentId);i=(i+step+stations.length)%stations.length;selectStation(stations[i].id,true)}
-audio.addEventListener("playing",()=>{updatePlayingUI();$("qualityInfo").textContent=t("connected")});
+audio.addEventListener("playing",()=>{endConnectionWait();updatePlayingUI();$("qualityInfo").textContent=t("connected")});
 audio.addEventListener("pause",updatePlayingUI);
 audio.addEventListener("ended",()=>{if(currentId==="ghasem-fazeli-radio")syncGhasemPlaylist(true)});
 audio.addEventListener("waiting",()=>updateStatusText(t("playing")));
-audio.addEventListener("error",()=>{updatePlayingUI();$("qualityInfo").textContent=t("error");if(currentId)toast(t("error"))});
+audio.addEventListener("error",()=>{if(mediaSwitching)return;updatePlayingUI();$("qualityInfo").textContent=t("error");if(currentId)toast(t("error"))});
 $("volumeSlider").value=Math.round(audio.volume*100);$("volumeNumber").textContent=$("volumeSlider").value+"%";
 $("volumeSlider").addEventListener("input",e=>{audio.volume=Number(e.target.value)/100;$("volumeNumber").textContent=e.target.value+"%";$("volIcon").textContent=Number(e.target.value)===0?"🔇":Number(e.target.value)<45?"🔉":"🔊";persist()});
 $("searchInput").addEventListener("input",renderStations);

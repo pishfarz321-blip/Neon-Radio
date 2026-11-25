@@ -266,7 +266,7 @@ try{
  if(saved.customStations&&Array.isArray(saved.customStations)){saved.customStations.forEach(s=>{if(s&&s.id&&s.name&&s.url&&!stations.some(x=>x.id===s.id)){stations.push(s);customIds.add(s.id)}})}
  if(Array.isArray(saved.favorites))favorites=new Set(saved.favorites);
  if(saved.lang==="en")lang="en";
- if(saved.theme==="light")document.documentElement.classList.add("light");if(["teal","pink","blue","purple","orange"].includes(saved.accent))document.documentElement.dataset.accent=saved.accent;
+ if(saved.theme!=="dark")document.documentElement.classList.add("light");if(["teal","pink","blue","purple","orange"].includes(saved.accent))document.documentElement.dataset.accent=saved.accent;
  if(Number.isFinite(saved.volume))audio.volume=Math.min(1,Math.max(0,saved.volume));
 }catch(e){}
 audio.volume=Number.isFinite(audio.volume)?audio.volume:.8;

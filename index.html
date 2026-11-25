@@ -182,7 +182,7 @@ const defaultStations=[
 {id:"xg-station-yas",name:"رادیو یاس",genre:"یاس",category:"artists",icon:"♫",url:"https://radio.xgaming.ir/listen/station-yas"},
 {id:"xg-dep",name:"رادیو دیپ",genre:"Deep / Electronic",category:"electronic",icon:"♫",url:"https://radio.xgaming.ir/listen/dep"},
 {id:"xg-station-hamidsefat",name:"رادیو حمید صفت",genre:"حمید صفت",category:"artists",icon:"♫",url:"https://radio.xgaming.ir/listen/station-hamidsefat"},
-{id:"xg-station-hipapologist",name:"رادیو هیپ اپالوجیست",genre:"Hip Apologist",category:"artists",icon:"♫",url:"https://radio.xgaming.ir/listen/station-hipapologist"}
+{id:"xg-station-hipapologist",name:"هیپ هاپلوژیست",genre:"Hip Apologist",category:"artists",icon:"♫",url:"https://radio.xgaming.ir/listen/station-hipapologist"}
 ,
 {id:"ghasem-fazeli-radio",name:"رادیو قاسم فاضلی",genre:"پلی‌لیست هماهنگ",category:"artists",icon:"♫",url:"https://dl.musicgitar.ir/Music/Ghasem%20Fazeli/320/Ghasem%20Fazeli%20-%20Soltane%20Adab%20%5B320%5D.mp3",playlist:[{"title":"سلطان ادب","url":"https://dl.musicgitar.ir/Music/Ghasem%20Fazeli/320/Ghasem%20Fazeli%20-%20Soltane%20Adab%20%5B320%5D.mp3"},{"title":"درمون دردم","url":"https://dl.musicgitar.ir/Music/Ghasem%20Fazeli/320/Ghasem%20Fazeli%20-%20Darmoone%20Dardom%20%5B320%5D.mp3"},{"title":"انگار نه انگار","url":"https://dl.musicgitar.ir/Music/Ghasem%20Fazeli/320/Ghasem%20Fazeli%20-%20Engar%20Na%20Engar%20%5B320%5D.mp3"},{"title":"عاشقی","url":"https://dl.musicgitar.ir/Music/Ghasem%20Fazeli/320/Ghasem%20Fazeli%20-%20Asheghi%20%5B320%5D.mp3"},{"title":"زندون","url":"https://dl.musicgitar.ir/Music/Ghasem%20Fazeli/320/Ghasem%20Fazeli%20-%20Zendoon%20%5B320%5D.mp3"},{"title":"خان دایی","url":"https://dl.musicgitar.ir/Music/Ghasem%20Fazeli/320/Ghasem%20Fazeli%20-%20Khan%20Daei%20%5B320%5D.mp3"},{"title":"طبیب درد","url":"https://dl.musicgitar.ir/Music/Ghasem%20Fazeli/320/Ghasem%20Fazeli%20-%20Tabib%20Dard%20%5B320%5D.mp3"},{"title":"شاهزاده","url":"https://dl.musicgitar.ir/Music/Ghasem%20Fazeli/320/Ghasem%20Fazeli%20-%20Shahzade%20%5B320%5D.mp3"},{"title":"گرفتار","url":"https://dl.musicgitar.ir/Music/Ghasem%20Fazeli/320/Ghasem%20Fazeli%20-%20Gereftar%20%5B320%5D.mp3"},{"title":"بلال","url":"https://dl.musicgitar.ir/Music/Ghasem%20Fazeli/320/Ghasem%20Fazeli%20-%20Balal%20%5B320%5D.mp3"},{"title":"بس کن","url":"https://dl.musicgitar.ir/Music/Ghasem%20Fazeli/320/Ghasem%20Fazeli%20-%20Bas%20Kon%20%5B320%5D.mp3"},{"title":"انتظار","url":"https://dl.musicgitar.ir/Music/Ghasem%20Fazeli/320/Ghasem%20Fazeli%20-%20Entezar%20%5B320%5D.mp3"},{"title":"همصدا","url":"https://dl.musicgitar.ir/Music/Ghasem%20Fazeli/320/Ghasem%20Fazeli%20-%20Hamseda%20%5B320%5D.mp3"},{"title":"خواستگاری","url":"https://dl.musicgitar.ir/Music/Ghasem%20Fazeli/320/Ghasem%20Fazeli%20-%20Khastegari%20%5B320%5D.mp3"},{"title":"درد دیری","url":"https://dl.musicgitar.ir/Music/Ghasem%20Fazeli/320/Ghasem%20Fazeli%20-%20Dard%20Diri%20%5B320%5D.mp3"},{"title":"دارم بزن","url":"https://dl.musicgitar.ir/Music/Ghasem%20Fazeli/320/Ghasem%20Fazeli%20-%20Darom%20Bezan%20%5B320%5D.mp3"}]}
 ];
@@ -272,6 +272,33 @@ function applyLanguage(){
  $("btnPrev").title=$("btnPrev").ariaLabel=t("previous");$("btnNext").title=$("btnNext").ariaLabel=t("next");
  $("favoritesOnlyBtn").querySelector("span").textContent=t("favorites");
  $("timerBtn").textContent=timerId?t("cancel"):t("start");
+ const setText=(selector,fa,en)=>{const el=document.querySelector(selector);if(el)el.textContent=lang==="en"?en:fa};
+ const setAttr=(selector,attr,fa,en)=>{const el=document.querySelector(selector);if(el)el.setAttribute(attr,lang==="en"?en:fa)};
+ setText("#fullscreenBtn","تمام‌صفحه","Fullscreen");
+ setAttr("#fullscreenBtn","aria-label","تمام‌صفحه","Fullscreen");
+ setAttr("#themeBtn","title","تغییر پوسته","Toggle theme");
+ setText("#playerName",t("choose"),"Choose a station");
+ setText("#trackTitle",t("trackUnavailable"),"Track information is not available");
+ setText("#qualityInfo",t("streamHelp"),"Choose a station to begin.");
+ const effectLabels=["Enable all effects","Neon halos","Floating particles","Laser trails","Neon fog","Light flow","Touch-reactive light","Glass effect","Entry effect","Bass pulse while playing","Dynamic light theme","Low-end device mode"];
+ const faEffectLabels=["فعال‌بودن همه افکت‌ها","هاله‌های نئونی","ذرات شناور","رد لیزری","مه نئونی","جریان نور","واکنش نور به لمس","افکت شیشه‌ای","افکت ورود","تپش هاله هنگام پخش","تم نور پویا","حالت سبک برای گوشی ضعیف"];
+ document.querySelectorAll(".effects-panel .effect-toggle span").forEach((el,i)=>{if(i<effectLabels.length)el.textContent=lang==="en"?effectLabels[i]:faEffectLabels[i]});
+ setText(".effect-actions .panel-help","سرعت تغییر تم","Theme transition speed");
+ const speedLabels={15:["آرام","Slow"],8:["معمولی","Normal"],4:["سریع","Fast"]};
+ document.querySelectorAll("#dynamicThemeSpeed option").forEach(el=>{const pair=speedLabels[Number(el.value)];if(pair)el.textContent=pair[lang==="en"?1:0]});
+ setText("#effectsStatus","تنظیمات افکت‌ها در همین مرورگر ذخیره می‌شوند.","Effect settings are saved in this browser.");
+ const timerLabels={0:["خاموش","Off"],5:["5 دقیقه","5 minutes"],15:["15 دقیقه","15 minutes"],30:["30 دقیقه","30 minutes"],45:["45 دقیقه","45 minutes"],60:["60 دقیقه","60 minutes"],90:["90 دقیقه","90 minutes"]};
+ document.querySelectorAll("#timerSelect option").forEach(el=>{const pair=timerLabels[Number(el.value)];if(pair)el.textContent=pair[lang==="en"?1:0]});
+ const sideLabels=document.querySelectorAll(".side-panel .setting-head label");
+ if(sideLabels[3])sideLabels[3].textContent=lang==="en"?"Theme color":"رنگ تم";
+ setAttr('[data-color="teal"]',"aria-label","سبز نئونی","Neon green");
+ setAttr('[data-color="pink"]',"aria-label","صورتی","Pink");
+ setAttr('[data-color="blue"]',"aria-label","آبی","Blue");
+ setAttr('[data-color="purple"]',"aria-label","بنفش","Purple");
+ setAttr('[data-color="orange"]',"aria-label","نارنجی","Orange");
+ setText("#addStationBtn","افزودن","Add station");
+ const footerLead=document.querySelector(".footer span:first-child");
+ if(footerLead)footerLead.textContent=lang==="en"?"Neon Radio | Streaming from public internet sources":"رادیو نئون | پخش از منابع عمومی اینترنتی";
  renderFilters();renderStations();updateStatusText();
 }
 function renderFilters(){

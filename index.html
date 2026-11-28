@@ -38,6 +38,8 @@ button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,inpu
 .cover{background:linear-gradient(145deg,color-mix(in srgb,var(--teal) 28%,var(--panel)),color-mix(in srgb,var(--cyan) 24%,var(--bg)));border:1px solid color-mix(in srgb,var(--teal) 58%,var(--border));color:var(--teal);box-shadow:inset 0 0 30px color-mix(in srgb,var(--teal) 18%,transparent),0 0 22px color-mix(in srgb,var(--teal) 12%,transparent)}
 @keyframes glow{to{box-shadow:0 0 30px color-mix(in srgb,var(--teal) 42%,transparent),inset 0 0 35px color-mix(in srgb,var(--cyan) 28%,transparent)}}
 /* END PLAYER COVER THEME ADAPTATION */
+.cover{color:var(--text)}.cover .cover-music-mark{display:block;width:58%;height:58%;max-width:68px;max-height:68px;overflow:visible;filter:drop-shadow(0 0 5px color-mix(in srgb,var(--teal) 28%,transparent))}
+
 
 
 .tehran-clock{font-weight:800;color:var(--teal);text-shadow:0 0 8px var(--teal),0 0 18px var(--teal);padding:7px 12px;border:1px solid var(--teal);border-radius:12px;white-space:nowrap}.color-swatches{display:flex;gap:12px;align-items:center;flex-wrap:wrap}.color-swatch{width:30px;height:30px;border-radius:50%;border:2px solid #ffffff30;box-shadow:0 0 10px currentColor;padding:0}.color-swatch[aria-pressed="true"]{outline:2px solid var(--text);outline-offset:3px}
@@ -160,7 +162,7 @@ html.power-save .station-card:hover,html.power-save .control:hover,html.power-sa
 <main>
 <section class="hero" aria-label="Radio player">
 <div class="player">
-  <div class="player-head"><div class="cover" id="playerLogo" aria-hidden="true">꧁</div><div class="now"><div class="eyebrow" data-i18n="nowPlaying">NOW PLAYING</div><div class="station-name" id="playerName">یک ایستگاه انتخاب کنید</div><div class="genre" id="playerGenre">—</div><div class="status"><span class="dot" id="statusDot"></span><span id="statusText">آماده پخش</span></div></div></div>
+  <div class="player-head"><div class="cover" id="playerLogo" aria-hidden="true"><svg class="cover-music-mark" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><path d="M27 43V13l27-6v29" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><ellipse cx="16" cy="46" rx="10" ry="7" fill="none" stroke="currentColor" stroke-width="5"/><ellipse cx="43" cy="38" rx="10" ry="7" fill="none" stroke="currentColor" stroke-width="5"/></svg></div><div class="now"><div class="eyebrow" data-i18n="nowPlaying">NOW PLAYING</div><div class="station-name" id="playerName">یک ایستگاه انتخاب کنید</div><div class="genre" id="playerGenre">—</div><div class="status"><span class="dot" id="statusDot"></span><span id="statusText">آماده پخش</span></div></div></div>
   <div class="track-info"><div><div class="track-label" data-i18n="trackInfo">اطلاعات آهنگ</div><div class="track-title" id="trackTitle">اطلاعات آهنگ از این ایستگاه دریافت نشده</div></div><span class="live-pill" id="livePill">RADIO</span></div>
   <div class="controls"><button class="control" id="btnPrev" type="button" aria-label="ایستگاه قبلی" title="ایستگاه قبلی">⏮</button><button class="control play" id="btnPlay" type="button" aria-label="پخش">▶</button><button class="control" id="btnNext" type="button" aria-label="ایستگاه بعدی" title="ایستگاه بعدی">⏭</button></div>
   <div class="volume-line"><span id="volIcon" aria-hidden="true">🔊</span><input type="range" id="volumeSlider" min="0" max="100" value="80" aria-label="Volume"><span class="volume-number" id="volumeNumber">80%</span></div>
@@ -351,7 +353,7 @@ let dariushShouldPlay=false;function showDariushWarning(shouldPlay){dariushShoul
 function selectStation(id,autoplay=false){
  const s=stations.find(x=>x.id===id);if(!s)return;
  endConnectionWait();clearTimeout(retryTimer);retryTimer=null;retryCount=0;delete stationStates[id];if(autoplay)beginConnectionWait();
- currentId=id;$("playerName").textContent=s.name;$("playerGenre").textContent=s.genre||s.category;$("playerLogo").textContent=s.icon||"♫";$("trackTitle").textContent=t("trackUnavailable");$("livePill").textContent="RADIO";
+ currentId=id;$("playerName").textContent=s.name;$("playerGenre").textContent=s.genre||s.category;if(s.icon){$("playerLogo").textContent=s.icon}else{$("playerLogo").innerHTML="<svg class=\"cover-music-mark\" viewBox=\"0 0 64 64\" aria-hidden=\"true\" focusable=\"false\"><path d=\"M27 43V13l27-6v29\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><ellipse cx=\"16\" cy=\"46\" rx=\"10\" ry=\"7\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"5\"/><ellipse cx=\"43\" cy=\"38\" rx=\"10\" ry=\"7\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"5\"/></svg>"}$("trackTitle").textContent=t("trackUnavailable");$("livePill").textContent="RADIO";
  updateMediaSession();audio.pause();audio.src=s.url;audio.load();renderStations();updateStatusText(autoplay?t("playing"):t("ready"));$("qualityInfo").textContent=autoplay?t("playing"):t("streamHelp");
  if(id==="xg-station-dariush"){showDariushWarning(autoplay);return}
   if(autoplay)playAudio();

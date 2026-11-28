@@ -63,9 +63,11 @@ button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,inpu
 @keyframes glow{to{box-shadow:0 0 30px color-mix(in srgb,var(--teal) 42%,transparent),inset 0 0 35px color-mix(in srgb,var(--cyan) 28%,transparent)}}
 /* END PLAYER COVER THEME ADAPTATION */
 /* STATION CARD THEME COLOR ADAPTATION ONLY */
-.station-card{background:linear-gradient(120deg,color-mix(in srgb,var(--teal) 24%,var(--panel)),color-mix(in srgb,var(--cyan) 18%,var(--panel)))!important;border-color:color-mix(in srgb,var(--teal) 42%,var(--border));}
-.station-card:hover{background:linear-gradient(120deg,color-mix(in srgb,var(--teal) 34%,var(--panel)),color-mix(in srgb,var(--cyan) 27%,var(--panel)))!important;border-color:color-mix(in srgb,var(--teal) 72%,var(--border));}
-.station-card.active{background:linear-gradient(120deg,color-mix(in srgb,var(--teal) 39%,var(--panel)),color-mix(in srgb,var(--cyan) 30%,var(--panel)))!important;border-color:var(--teal);}
+.station-card{background:linear-gradient(115deg,color-mix(in srgb,var(--teal) 48%,var(--panel)),color-mix(in srgb,var(--cyan) 36%,var(--panel)))!important;border-color:color-mix(in srgb,var(--teal) 65%,var(--border))!important;}
+.station-card:hover{background:linear-gradient(115deg,color-mix(in srgb,var(--teal) 62%,var(--panel)),color-mix(in srgb,var(--cyan) 48%,var(--panel)))!important;border-color:color-mix(in srgb,var(--teal) 82%,var(--border))!important;}
+.station-card.active{background:linear-gradient(115deg,color-mix(in srgb,var(--teal) 68%,var(--panel)),color-mix(in srgb,var(--cyan) 52%,var(--panel)))!important;border-color:var(--teal)!important;}
+html.power-save .station-card{background:linear-gradient(115deg,color-mix(in srgb,var(--teal) 48%,var(--panel)),color-mix(in srgb,var(--cyan) 36%,var(--panel)))!important;border-color:color-mix(in srgb,var(--teal) 65%,var(--border))!important;}
+html.power-save .station-card.active{background:linear-gradient(115deg,color-mix(in srgb,var(--teal) 68%,var(--panel)),color-mix(in srgb,var(--cyan) 52%,var(--panel)))!important;border-color:var(--teal)!important;}
 /* END STATION CARD THEME COLOR ADAPTATION ONLY */
 
 .cover{color:var(--text)}.cover .cover-music-mark{display:block;width:58%;height:58%;max-width:68px;max-height:68px;overflow:visible;filter:drop-shadow(0 0 5px color-mix(in srgb,var(--teal) 28%,transparent))}
